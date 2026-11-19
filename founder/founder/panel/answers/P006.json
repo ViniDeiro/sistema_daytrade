@@ -1,0 +1,13 @@
+{
+  "id": "P006",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "Os próprios números mostram 49,5% de acerto contra 51,02% de equilíbrio, então no papel isso perde dinheiro. Já perdi grana com sinal de grupo, não vou pagar mensalidade por algo que admite que ainda não funciona.",
+  "objection": "O resultado medido está abaixo do ponto de equilíbrio. Pagar para receber sinais que perdem é perder duas vezes. Também não sei se é legal ou seguro operar isso.",
+  "would_change_my_mind": "Ver pelo menos 2 ou 3 meses de registro público com acerto claramente acima de 51% em centenas de entradas do filtro forte, e um teste grátis para eu conferir antes.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 50,
+  "price_too_expensive": 100
+}

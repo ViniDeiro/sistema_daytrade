@@ -1,0 +1,13 @@
+{
+  "id": "P020",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Backtest bonito, mas nao e resultado ao vivo e eu tenho banca pequena. Sinal 7 segundos antes do fechamento ainda pode chegar tarde ou a corretora mudar o preco, e eu so pago se tiver teste gratis ou cupom.",
+  "objection": "O sinal chega tarde ou a corretora muda o preco, e o backtest nao mostra isso. 54% de acerto com 51% de equilibrio e uma margem muito fina para qualquer atraso ou slippage.",
+  "would_change_my_mind": "Um teste gratis de 7 a 14 dias com resultado ao vivo verificavel (horario do sinal vs. horario da vela) ou desconto de lancamento bem forte, sem fidelidade.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 40,
+  "price_too_expensive": 80
+}

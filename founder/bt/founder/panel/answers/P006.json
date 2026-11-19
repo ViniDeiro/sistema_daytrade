@@ -1,0 +1,13 @@
+{
+  "id": "P006",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Já perdi dinheiro com grupo de sinais e esse aí mostra só backtest, não resultado ao vivo. Acerto de 54% com 7 segundos de antecedência numa vela de 1 minuto, com corretora, atraso e slippage, me parece bom demais pra ser verdade.",
+  "objection": "É backtest, não ao vivo. Em 7 segundos eu mal consigo abrir a operação, e o edge é de só 3 pontos acima do equilíbrio. Qualquer atraso e vira prejuízo. Também não sei se é legal ou seguro operar isso.",
+  "would_change_my_mind": "Resultado ao vivo verificável de alguns meses, com prints de corretora ou extrato, e um teste grátis de 7 a 14 dias pra eu ver se consigo entrar a tempo.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 50,
+  "price_too_expensive": 100
+}

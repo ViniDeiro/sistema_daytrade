@@ -1,0 +1,13 @@
+{
+  "id": "P005",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "Eles mesmos mostram 49,5% em 1.853 entradas, abaixo dos 51,02% de equilíbrio. Pagar mensalidade por sinal que perde dinheiro não faz sentido pra quem controla banca com planilha.",
+  "objection": "49,5% de acerto é abaixo do equilíbrio, então sigo perdendo dinheiro mesmo seguindo todos os sinais. O filtro forte tem só 16 entradas, isso não prova nada.",
+  "would_change_my_mind": "Ver uns 2 ou 3 meses de resultado ao vivo com acerto claramente acima de 51,02% numa amostra grande, inclusive do filtro forte, no registro público.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 40,
+  "price_too_expensive": 80
+}

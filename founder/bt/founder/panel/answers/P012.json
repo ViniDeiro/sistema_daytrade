@@ -1,0 +1,13 @@
+{
+  "id": "P012",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "É backtest, não resultado ao vivo, e todo sinal pago promete lucro. 13 de 13 meses positivos soa bom demais pra ser verdade e eu já queimei banca pequena com isso.",
+  "objection": "Backtest não é prova. Não tem histórico ao vivo auditável nem prints de resultado real, e com 7 segundos de antecedência o atraso do Telegram e da corretora pode comer o 54%, que fica a pouco mais de 3 pontos do equilíbrio.",
+  "would_change_my_mind": "Histórico ao vivo auditável de pelo menos 2 ou 3 meses, com prints de operações reais com horário, e um período de teste grátis pra eu comparar com a minha planilha.",
+  "price_too_cheap": 10,
+  "price_cheap": 25,
+  "price_expensive": 60,
+  "price_too_expensive": 120
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P005",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Backtest de 1 minuto não me convence: a margem sobre o equilíbrio é de uns 3 pontos e qualquer slippage ou atraso no Telegram come isso. Já vi muito grupo com resultado lindo que não se repete ao vivo, e com banca pequena não vou pagar assinatura por simulação.",
+  "objection": "É só backtest. Com 7 segundos de antecedência e execução manual, o resultado real pode cair abaixo dos 51,02% e eu pago assinatura e ainda perco banca.",
+  "would_change_my_mind": "Alguns meses de resultado ao vivo auditado, com horário dos alertas e prints das entradas, ou um teste grátis de 30 dias para eu medir o acerto na minha corretora.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 40,
+  "price_too_expensive": 80
+}

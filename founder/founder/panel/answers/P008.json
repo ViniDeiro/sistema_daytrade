@@ -1,0 +1,13 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "O próprio número deles mostra 49,5% em 1.853 entradas, abaixo do ponto de equilíbrio de 51,02%. Ou seja, no papel esse sinal perde dinheiro, e eu quero lucro logo, não pagar pra ver uma estratégia em validação.",
+  "objection": "A estratégia está perdendo na prova ao vivo. O filtro forte com 16 entradas não prova nada. Por que eu pagaria mensalidade por algo que, pelos dados deles, não dá lucro?",
+  "would_change_my_mind": "Ver o registro público com pelo menos algumas centenas de entradas do filtro forte acima de 53% de acerto, ao vivo, e um período de teste grátis.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 50,
+  "price_too_expensive": 100
+}

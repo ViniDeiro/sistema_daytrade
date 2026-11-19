@@ -1,0 +1,13 @@
+{
+  "id": "P013",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Backtest é simulado, não é ao vivo, e todo sinal pago mostra backtest lindo. Já perdi dinheiro com isso, então prefiro não pagar mensalidade por uma promessa sem prova ao vivo.",
+  "objection": "Não vejo resultado real ao vivo, só simulação. Com 7 segundos antes do fechamento ainda tem atraso do Telegram, slippage e payout que muda, e isso o backtest não pega. 13 de 13 meses positivos parece bom demais.",
+  "would_change_my_mind": "Ver pelo menos 1 a 2 meses de resultado ao vivo, com horário e print de corretora verificável, ou um teste grátis de 7 a 14 dias onde eu mesmo confiro os sinais contra as velas.",
+  "price_too_cheap": 7,
+  "price_cheap": 19,
+  "price_expensive": 59,
+  "price_too_expensive": 120
+}

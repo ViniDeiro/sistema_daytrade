@@ -1,0 +1,13 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Backtest é simulado, não é resultado ao vivo, e já vi vários sinal pago com backtest bonito que morre na conta real. 54% com payout de 96% deixa uma margem de 3 pontos sobre o equilíbrio, qualquer atraso ou slippage come isso.",
+  "objection": "Ninguém mostra prova ao vivo. Backtest de 4 velas iguais não me diz se o sinal chega a tempo, 7 segundos antes do fechamento, e se a corretora executa no preço que o teste assumiu.",
+  "would_change_my_mind": "Um registro ao vivo verificável de alguns meses, com horário de cada sinal, ou um teste grátis em que eu confira na minha planilha de banca se o acerto fica acima de 51%.",
+  "price_too_cheap": 15,
+  "price_cheap": 35,
+  "price_expensive": 90,
+  "price_too_expensive": 180
+}

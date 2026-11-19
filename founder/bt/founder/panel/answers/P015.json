@@ -1,0 +1,13 @@
+{
+  "id": "P015",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Vi guru de trading no TikTok demais pra cair em backtest bonito. 54% simulado contra 51% de equilíbrio é margem fina, e na minha banca pequena qualquer atraso ou slippage come isso.",
+  "objection": "É só backtest, não resultado ao vivo. Com 7 segundos de antecedência, payout de 96% e spread real da corretora, esse 3% de vantagem some fácil e eu perco dinheiro pagando assinatura ainda por cima.",
+  "would_change_my_mind": "Resultado ao vivo verificado por alguns meses, com extrato de corretora real, e um teste grátis ou garantia de devolução.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 40,
+  "price_too_expensive": 80
+}

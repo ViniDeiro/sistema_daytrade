@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Histórico mês a mês</title>
+<style>
+  :root{--bg:#0f1318;--card:#171d25;--line:#252e3a;--tx:#e7ecf2;--mut:#8b97a6;--g:#2ecc71;--r:#ff5c5c;--y:#f5b942;--b:#3d8bff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,sans-serif;padding:16px;max-width:1100px;margin-inline:auto}
+  a{color:var(--b)}
+  h1{font-size:14px;color:var(--mut);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin:0}
+  h2{font-size:22px;margin:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+  .sub{color:var(--mut);font-size:13px}
+  .pos{color:var(--g)}.neg{color:var(--r)}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:12px}
+  .filtros label{display:block;font-size:12px;color:var(--mut);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
+  .seg{display:flex;gap:4px;flex-wrap:wrap}
+  .seg button{font:inherit;font-size:14px;color:var(--tx);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer}
+  .seg button.on{border-color:var(--g);background:#12361f}
+  select,input{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;width:100%}
+  .hrs{display:flex;gap:8px;align-items:center}.hrs span{color:var(--mut)}
+  .ano{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .ano .tot{font-size:34px;font-weight:800;font-variant-numeric:tabular-nums}
+  .meses{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+  .mes{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+  .mes:hover{border-color:var(--mut)}
+  .mes.sel{outline:2px solid var(--b)}
+  .mes.p{border-top:4px solid var(--g)}.mes.n{border-top:4px solid var(--r)}.mes.z{opacity:.45;cursor:default}
+  .mes .nm{font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
+  .mes .v{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;margin:4px 0;line-height:1.1}
+  .mes .d{font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums}
+  .aviso{font-size:11px;color:var(--y);margin-top:4px}
+  .resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px}
+  .stat{background:var(--bg);border-radius:8px;padding:10px;text-align:center}
+  .stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}.stat span{font-size:12px;color:var(--mut)}
+  table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+  td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:right}
+  td:first-child,th:first-child{text-align:left}th{color:var(--mut);font-weight:600;font-size:12px}
+  .tw{overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="top" style="margin-bottom:12px"><div><h1>Histórico refeito pelas velas</h1><h2>Regra 1 · resultado mês a mês</h2></div><a href="/">← voltar ao painel ao vivo</a></div>
+
+<div class="card">
+  <div class="sub">4 ou mais velas M1 da mesma cor → entra a favor na vela seguinte (uma entrada por minuto enquanto a sequência continua). Sem gale. Com Soros nível 1: depois de uma vitória no minuto anterior, a entrada seguinte vale valor × (1 + payout); depois volta ao valor base. Calculado com velas fechadas: o ao vivo costuma ficar alguns pontos abaixo.</div>
+  <div class="filtros">
+    <div><label>Ativo</label><div class="seg" id="fAtivo"><button data-v="IDX" class="on">IDX</button><button data-v="MEMX">MEMX</button><button data-v="AMBOS">IDX + MEMX</button></div></div>
+    <div><label>Sinais</label><div class="seg" id="fSinal"><button data-v="todos" class="on">Todos</button><button data-v="fortes">Só fortes (≥4,9)</button></div></div>
+    <div><label>Gestão</label><div class="seg" id="fGest"><button data-v="fixo" class="on">Sem Soros (fixo)</button><button data-v="soros">Com Soros nível 1</button></div></div>
+    <div><label>Horário das entradas</label><div class="hrs"><select id="hDe"></select><span>até</span><select id="hAte"></select></div></div>
+    <div><label>Atalhos de horário</label><div class="seg" id="fAtalho"><button data-h="0-24">24h</button><button data-h="8-22">8h–22h</button><button data-h="10-12">10h–12h</button></div></div>
+    <div><label>Dias da semana</label><div class="seg" id="fDow"></div></div>
+    <div><label>Valor por entrada · payout</label><div class="hrs"><input id="stake" type="number" min="1" step="1" value="20"><span>$</span><input id="payout" type="number" min="1" max="100" step="1" value="96"><span>%</span></div></div>
+  </div>
+</div>
+
+<div class="card" id="geral"></div>
+<div id="anos"></div>
+<div class="card" id="detalhe" style="display:none"></div>
+<div class="sub" id="rodape"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DOW = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const fmt = v => (v > 0 ? '+' : v < 0 ? '−' : '') + '$' + Math.abs(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmt0 = v => (v > 0 ? '+' : v < 0 ? '−' : '') + '$' + Math.abs(Math.round(v)).toLocaleString('pt-BR');
+const cl = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+const pc = (w, n) => n ? (100 * w / n).toFixed(1).replace('.', ',') + '%' : '–';
+let H = null, sel = null;
+const F = { ativo: 'IDX', sinal: 'todos', gest: 'fixo', de: 0, ate: 24, dow: new Set([0,1,2,3,4,5,6]) };
+try { Object.assign(F, JSON.parse(localStorage.getItem('histF') || '{}')); F.dow = new Set(F.dow ?? [0,1,2,3,4,5,6]); } catch {}
+
+for (let h = 0; h < 24; h++) $('hDe').add(new Option(String(h).padStart(2, '0') + 'h', h));
+for (let h = 1; h <= 24; h++) $('hAte').add(new Option(String(h).padStart(2, '0') + 'h', h));
+$('fDow').innerHTML = DOW.map((d, i) => `<button data-v="${i}">${d}</button>`).join('');
+function syncUI() {
+  for (const b of $('fAtivo').children) b.classList.toggle('on', b.dataset.v === F.ativo);
+  for (const b of $('fSinal').children) b.classList.toggle('on', b.dataset.v === F.sinal);
+  for (const b of $('fGest').children) b.classList.toggle('on', b.dataset.v === F.gest);
+  for (const b of $('fDow').children) b.classList.toggle('on', F.dow.has(+b.dataset.v));
+  for (const b of $('fAtalho').children) b.classList.toggle('on', b.dataset.h === `${F.de}-${F.ate}`);
+  $('hDe').value = F.de; $('hAte').value = F.ate;
+  try { localStorage.setItem('histF', JSON.stringify({ ...F, dow: [...F.dow] })); } catch {}
+}
+$('fAtivo').onclick = e => { if (e.target.dataset.v) { F.ativo = e.target.dataset.v; draw(); } };
+$('fGest').onclick = e => { if (e.target.dataset.v) { F.gest = e.target.dataset.v; draw(); } };
+$('fSinal').onclick = e => { if (e.target.dataset.v) { F.sinal = e.target.dataset.v; draw(); } };
+$('fDow').onclick = e => { if (e.target.dataset.v) { const v = +e.target.dataset.v; F.dow.has(v) ? F.dow.delete(v) : F.dow.add(v); draw(); } };
+$('fAtalho').onclick = e => { if (e.target.dataset.h) { [F.de, F.ate] = e.target.dataset.h.split('-').map(Number); draw(); } };
+$('hDe').onchange = () => { F.de = +$('hDe').value; if (F.ate <= F.de) F.ate = F.de + 1; draw(); };
+$('hAte').onchange = () => { F.ate = +$('hAte').value; if (F.ate <= F.de) F.de = F.ate - 1; draw(); };
+$('stake').oninput = $('payout').oninput = () => draw();
+
+// soma por dia, já filtrado
+function porDia() {
+  const nomes = F.ativo === 'AMBOS' ? ['IDX', 'MEMX'] : [F.ativo], off = F.sinal === 'fortes' ? 3 : 0, out = new Map();
+  for (const nome of nomes) { const A = H.ativos[nome]; if (!A) continue;
+    for (const [d, horas] of Object.entries(A.dias)) {
+      const dow = new Date(d + 'T12:00:00').getDay(); if (!F.dow.has(dow)) continue;
+      const x = out.get(d) ?? { d, w: 0, l: 0, e: 0, w1: 0, l1: 0, velas: 0 };
+      // Soros: a hora continua a sequência da anterior se a anterior também está no filtro (00h olha o dia anterior)
+      const ontemOk = F.dow.has((dow + 6) % 7), s0 = 6 + (off ? 4 : 0);
+      for (const [h, c] of Object.entries(horas)) if (+h >= F.de && +h < F.ate) { x.w += c[off]; x.l += c[off + 1]; x.e += c[off + 2];
+        const segue = +h > F.de || (+h === 0 && F.de === 0 && F.ate === 24 && ontemOk), j = s0 + (segue ? 0 : 2); x.w1 += c[j] ?? 0; x.l1 += c[j + 1] ?? 0; }
+      out.set(d, x); }
+    for (const [d, n] of Object.entries(A.velas)) { const x = out.get(d); if (x) x.velas += n; } }
+  return out;
+}
+function draw() {
+  syncUI(); if (!H) return;
+  const stake = Math.max(0, +$('stake').value || 0), P = (+$('payout').value || 0) / 100;
+  const S2 = stake * (1 + P), soros = F.gest === 'soros';
+  const pnl = x => soros ? (x.w - x.w1) * stake * P - (x.l - x.l1) * stake + x.w1 * S2 * P - x.l1 * S2 : x.w * stake * P - x.l * stake;
+  const D = porDia(), M = new Map(), nAt = F.ativo === 'AMBOS' ? 2 : 1;
+  for (const x of D.values()) { const k = x.d.slice(0, 7), m = M.get(k) ?? { k, w: 0, l: 0, e: 0, w1: 0, l1: 0, pos: 0, neg: 0, dias: 0, velas: 0, diasL: [] };
+    m.w += x.w; m.l += x.l; m.e += x.e; m.w1 += x.w1; m.l1 += x.l1; m.velas += x.velas; m.dias++; const p = pnl(x); if (x.w + x.l) { if (p > 0) m.pos++; else if (p < 0) m.neg++; } m.diasL.push(x); M.set(k, m); }
+  const anos = [...new Set([...M.keys()].map(k => k.slice(0, 4)))].sort().reverse();
+  let tw = 0, tl = 0, tw1 = 0, tl1 = 0, mPos = 0, mNeg = 0, pior = null, melhor = null;
+  $('anos').innerHTML = anos.map(a => {
+    let aw = 0, al = 0, aw1 = 0, al1 = 0;
+    const cards = MESES.map((nm, i) => { const k = `${a}-${String(i + 1).padStart(2, '0')}`, m = M.get(k);
+      if (!m) return `<div class="mes z"><div class="nm">${nm}</div><div class="v sub">sem dados</div></div>`;
+      const n = m.w + m.l, p = pnl(m); aw += m.w; al += m.l; aw1 += m.w1; al1 += m.l1;
+      // velas esperadas no mês = dias com dados × 1440 por ativo; aviso se faltar mais de 5%
+      const [yy, mm] = k.split('-').map(Number), ini = new Date(yy, mm - 1, 1).getTime(), fim = new Date(yy, mm, 1).getTime();
+      const esperadas = (F.ativo === 'AMBOS' ? ['IDX', 'MEMX'] : [F.ativo]).reduce((s, nome) => { const A = H.ativos[nome]; return A ? s + Math.max(0, Math.min(fim, A.ate + 60000) - Math.max(ini, A.de)) / 60000 : s; }, 0);
+      const falta = esperadas ? 1 - m.velas / esperadas : 0;
+      if (n) { p > 0 ? mPos++ : p < 0 && mNeg++; if (!pior || p < pior.p) pior = { k, p }; if (!melhor || p > melhor.p) melhor = { k, p }; }
+      return `<button class="mes ${p > 0 ? 'p' : p < 0 ? 'n' : ''} ${sel === k ? 'sel' : ''}" data-k="${k}"><div class="nm">${nm}</div><div class="v ${cl(p)}">${fmt0(p)}</div>
+        <div class="d">${n.toLocaleString('pt-BR')} entradas · ${pc(m.w, n)}</div><div class="d">dias <span class="pos">${m.pos}+</span> / <span class="neg">${m.neg}−</span></div>
+        ${falta > 0.05 ? `<div class="aviso">⚠ mês com ${Math.round(falta * 100)}% das velas faltando</div>` : ''}</button>`; }).join('');
+    tw += aw; tl += al; tw1 += aw1; tl1 += al1; const ap = pnl({ w: aw, l: al, w1: aw1, l1: al1 });
+    return `<div class="card"><div class="ano"><h2>${a}</h2><div style="text-align:right"><div class="tot ${cl(ap)}">${fmt0(ap)}</div><div class="sub">${(aw + al).toLocaleString('pt-BR')} entradas · acerto ${pc(aw, aw + al)}</div></div></div><div class="meses">${cards}</div></div>`;
+  }).join('');
+  const tp = pnl({ w: tw, l: tl, w1: tw1, l1: tl1 }), be = P ? 100 / (1 + P) : 100;
+  $('geral').innerHTML = `<div class="top"><h1>Resumo do filtro · ${F.ativo === 'AMBOS' ? 'IDX + MEMX' : F.ativo} · ${F.sinal === 'fortes' ? 'só fortes' : 'todos os sinais'} · ${String(F.de).padStart(2,'0')}h–${String(F.ate).padStart(2,'0')}h · ${soros ? `Soros $${stake} → $${S2.toFixed(2).replace('.', ',')}` : `fixo $${stake}`}</h1></div>
+    <div class="resumo"><div class="stat"><b class="${cl(tp)}">${fmt0(tp)}</b><span>resultado total</span></div>
+    <div class="stat"><b>${pc(tw, tw + tl)}</b><span>acerto (empate em ${be.toFixed(1).replace('.', ',')}%)</span></div>
+    <div class="stat"><b>${(tw + tl).toLocaleString('pt-BR')}</b><span>entradas</span></div>
+    <div class="stat"><b><span class="pos">${mPos}</span> / <span class="neg">${mNeg}</span></b><span>meses positivos / negativos</span></div>
+    <div class="stat"><b class="${cl(melhor?.p)}">${melhor ? fmt0(melhor.p) : '–'}</b><span>melhor mês${melhor ? ' (' + nomeMes(melhor.k) + ')' : ''}</span></div>
+    <div class="stat"><b class="${cl(pior?.p)}">${pior ? fmt0(pior.p) : '–'}</b><span>pior mês${pior ? ' (' + nomeMes(pior.k) + ')' : ''}</span></div></div>`;
+  for (const b of document.querySelectorAll('.mes[data-k]')) b.onclick = () => { sel = sel === b.dataset.k ? null : b.dataset.k; draw(); if (sel) $('detalhe').scrollIntoView({ behavior: 'smooth' }); };
+  // detalhe do mês: dia a dia
+  const m = sel && M.get(sel);
+  if (!m) { $('detalhe').style.display = 'none'; } else {
+    $('detalhe').style.display = '';
+    let ac = 0;
+    const fixo = x => x.w * stake * P - x.l * stake;
+    // coluna "ao vivo": só quando o filtro é igual ao do painel principal (fortes, IDX+MEMX, 8h–22h, todos os dias, $20, 96%)
+    const vivoOk = LIVE && F.sinal === 'fortes' && F.ativo === 'AMBOS' && F.de === 8 && F.ate === 22 && F.dow.size === 7 && stake === 20 && P === 0.96;
+    const vivo = vivoOk ? new Map(LIVE[soros ? 'soros' : 'fixo'].dias.map(d => [d.dia, d])) : null;
+    const linhas = m.diasL.filter(x => x.w + x.l + x.e > 0).sort((a, b) => a.d.localeCompare(b.d)).map(x => { const n = x.w + x.l, p = pnl(x); ac += p; const dt = new Date(x.d + 'T12:00:00'), v = vivo?.get(x.d);
+      return `<tr><td>${dt.toLocaleDateString('pt-BR')} <span class="sub">${DOW[dt.getDay()]}</span></td><td>${n}</td><td>${x.e}</td><td>${pc(x.w, n)}</td>${soros ? `<td class="${cl(fixo(x))}">${fmt(fixo(x))}</td>` : ''}<td class="${cl(p)}"><b>${fmt(p)}</b></td><td class="${cl(ac)}">${fmt(ac)}</td>`
+        + (vivo ? `<td>${v ? `<span class="${cl(v.pnl)}">${fmt(v.pnl)}</span> <span class="sub">${v.n} · ${pc(v.w, v.n)}</span>` : '<span class="sub">–</span>'}</td>` : '') + `</tr>`; }).join('');
+    const p = pnl(m);
+    $('detalhe').innerHTML = `<div class="top" style="margin-bottom:10px"><h1>${nomeMes(sel)} · dia a dia</h1><b class="${cl(p)}" style="font-size:24px">${fmt(p)}</b></div>
+      <div class="tw"><table><thead><tr><th>Dia</th><th>Entradas</th><th>Empates</th><th>Acerto</th>${soros ? '<th>Se fosse fixo</th><th>Com Soros</th>' : '<th>Resultado</th>'}<th>Acumulado no mês</th>${vivo ? '<th>Ao vivo (painel)</th>' : ''}</tr></thead><tbody>${linhas}</tbody></table></div>
+      <div class="sub" style="margin-top:8px">${soros ? 'Com Soros o resultado pode ficar positivo com acerto abaixo de 50% (as vitórias no Soros valem quase o dobro) e negativo acima de 50% (as derrotas no Soros também). ' : ''}`
+      + (vivo ? 'A coluna “ao vivo” é o que o painel principal registrou (só os últimos 15 dias). A diferença vem de sinais que o ao vivo não pegou (PC dormindo) ou que mudaram de cor nos últimos segundos antes do fechamento.' : 'Para comparar com o painel ao vivo, use: Só fortes · IDX + MEMX · 8h–22h · todos os dias · $20.') + '</div>';
+  }
+  const at = F.ativo === 'AMBOS' ? ['IDX', 'MEMX'] : [F.ativo];
+  $('rodape').innerHTML = at.map(n => H.ativos[n] && `${n}: velas de ${new Date(H.ativos[n].de).toLocaleDateString('pt-BR')} até ${new Date(H.ativos[n].ate).toLocaleString('pt-BR')}`).filter(Boolean).join(' · ')
+    + ` · dados gerados em ${new Date(H.geradoEm).toLocaleString('pt-BR')} (para atualizar: <code>node gera_historico.mjs</code> e recarregar a página)`;
+}
+const nomeMes = k => MESES[+k.slice(5) - 1].slice(0, 3) + '/' + k.slice(2, 4);
+let LIVE = null;
+fetch('/api/fortes', { cache: 'no-store' }).then(r => r.json()).then(j => { LIVE = j; draw(); }).catch(() => {});
+(async () => { try { H = await (await fetch('/dados/historico.json', { cache: 'no-store' })).json(); } catch { $('geral').innerHTML = '<span class="neg">Não consegui carregar dados/historico.json. Rode <code>node gera_historico.mjs</code>.</span>'; } draw(); })();
+</script>
+</body>
+</html>

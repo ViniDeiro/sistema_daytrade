@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acompanhamento ao vivo</title>
+<style>
+  :root{--bg:#0f1318;--card:#171d25;--line:#252e3a;--tx:#e7ecf2;--mut:#8b97a6;--g:#2ecc71;--r:#ff5c5c;--y:#f5b942;--b:#3d8bff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,sans-serif;padding:16px;max-width:760px;margin-inline:auto}
+  h1{font-size:14px;color:var(--mut);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+  .sub{color:var(--mut);font-size:13px}
+  .pos{color:var(--g)}.neg{color:var(--r)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  button{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer}
+  button:hover{border-color:var(--g)}
+  input[type=checkbox]{width:auto}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+  .stat{background:var(--bg);border-radius:8px;padding:10px;text-align:center}
+  .stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+  .stat span{font-size:12px;color:var(--mut)}
+  #sig{display:none;border-radius:12px;padding:16px;margin-bottom:12px;text-align:center}
+  #sig b{font-size:30px;display:block}
+  .gauge{margin:8px 0 2px}.gauge .gt{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:var(--mut,#8b94a7)}
+  .gauge .gv{font-size:26px;font-weight:700;color:var(--fg,#e6e9ef)}.gauge .gb{position:relative;height:12px;border-radius:6px;background:#2a3040;margin-top:4px;overflow:visible}
+  .gauge .gb i{display:block;height:100%;border-radius:6px;background:#6b7280;transition:width .4s}.gauge .gb u{position:absolute;top:-3px;bottom:-3px;width:2px;background:#e6e9ef;opacity:.7}
+  .gauge.warn .gb i{background:#d9a21b}.gauge.ok .gb i{background:#2fbf71}.gauge.ok .gv{color:#2fbf71}.gauge.warn .gv{color:#d9a21b}
+  #sigM{display:none;border-radius:12px;padding:16px;margin-bottom:12px;text-align:center}#sigM b{font-size:30px;display:block}
+  #sigM.G{background:#12361f;border:2px solid var(--g)}#sigM.R{background:#3a1717;border:2px solid var(--r)}
+  #sig.G{background:#12361f;border:2px solid var(--g)}#sig.R{background:#3a1717;border:2px solid var(--r)}
+  .strip{display:flex;gap:4px;align-items:center;margin:8px 0;flex-wrap:wrap}
+  .cd{width:22px;height:22px;border-radius:5px;background:var(--line);flex:none}
+  .cd.G{background:var(--g)}.cd.R{background:var(--r)}.cd.D{background:var(--mut)}
+  .cd.cur{outline:2px dashed var(--tx);outline-offset:1px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0}
+  .bar>i{display:block;height:100%;background:var(--y);width:0}
+  table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+  td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left}
+  th{color:var(--mut);font-weight:500;font-size:12px}
+  td.G{color:var(--g)}td.R{color:var(--r)}
+  .big{font-size:40px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+  .chip{display:inline-block;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:600}
+  .chip.ok{background:#12361f;color:var(--g)}.chip.warn{background:#3a2f12;color:var(--y)}.chip.bad{background:#3a1717;color:var(--r)}.chip.mut{background:var(--line);color:var(--mut)}
+  .scale{position:relative;height:34px;margin:18px 6px 26px}
+  .scale .track{position:absolute;left:0;right:0;top:14px;height:6px;border-radius:3px;background:var(--line)}
+  .scale .zone{position:absolute;top:14px;height:6px}
+  .scale .tick{position:absolute;top:6px;width:2px;height:22px;background:var(--mut)}
+  .scale .tick span{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--mut);white-space:nowrap}
+  .scale .tick span.lo{top:26px}
+  .scale .dot{position:absolute;top:9px;width:16px;height:16px;border-radius:50%;margin-left:-8px;border:3px solid var(--bg)}
+  .dot.ok{background:var(--g)}.dot.warn{background:var(--y)}.dot.bad{background:var(--r)}.dot.mut{background:var(--mut)}
+  #fwd .stats{display:none}
+  .tabs{display:flex;gap:8px;margin-bottom:16px;position:sticky;top:0;background:var(--bg);padding:6px 0;z-index:5}
+  .tab{flex:1;text-align:center;font-weight:600;padding:12px 10px}
+  .tab.on{border-color:var(--g);background:#12361f}
+  @media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}.big{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="tabs"><button class="tab on" id="tbP">🏆 Sinais fortes · Soros 20</button><button class="tab" id="tbF">➖ Fixa · 20</button><button class="tab" id="tbI">↔️ Inverso · 20 (papel)</button><button class="tab" id="tbM5">⏱️ IDX M5 (papel)</button><button class="tab" style="flex:0 0 auto;padding:12px 14px" title="Histórico mês a mês (desde 2024)" onclick="location.href='/historico'">📅</button><button class="tab" id="tbMore" style="flex:0 0 auto;padding:12px 14px" title="Outras visões">⋯</button></div>
+<div class="tabs" id="legacyTabs" style="display:none"><button class="tab" id="tbA">📊 Todos os sinais</button><button class="tab" id="tbB">↩️ Contra</button><button class="tab" id="tbC">🕙 Janela</button><button class="tab" id="tbD">💱 Cripto M15</button><button class="tab" id="tbE">🧩 MEMX (papel)</button></div>
+<div id="tabP"></div>
+<div id="tabF" style="display:none"></div>
+<div id="tabI" style="display:none"></div>
+<div id="tabM5" style="display:none"><div class="card"><h1>IDX/USDT M5 · extremo (papel)</h1><div class="sub" style="margin:6px 0 10px">Vela de 5 min com força ≥ 4,9 ATR e preço na máxima/mínima, ~1 min antes de fechar → entra na próxima vela de 5 min, mesma cor. Histórico: 62,6% (439 casos em 24 meses). Equilíbrio 51,02%. Só papel, $20 fixo. Valide com 50–100 entradas.</div>
+<div class="stat"><b id="m5Rate">–</b><span>acerto</span></div> <div class="stat"><b id="m5N">0</b><span>entradas</span></div> <div class="stat"><b id="m5Pnl">$0</b><span>resultado</span></div>
+<table style="margin-top:12px"><thead><tr><th>Hora</th><th>Direção</th><th>Força</th><th>Resultado</th><th>P/L</th></tr></thead><tbody id="m5Tb"></tbody></table></div></div>
+
+<div id="tabA">
+
+<div class="card" id="fwd">
+  <div class="top">
+    <div><h1>Acompanhamento ao vivo · IDX/USDT M1</h1>
+      <div class="sub" id="fwdSub">Desligado. Só lê o gráfico; não envia ordens.</div></div>
+    <div class="row">
+      <label class="sub" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="snd"> som</label>
+      <button id="fwdBtn" style="min-width:190px">▶ Ligar acompanhamento</button>
+    </div>
+  </div>
+  <div id="sig"></div>
+  <div class="gauge" id="gI"><div class="gt"><span>Força da sequência · <b>atenção a partir de 4,0 · sinal forte a partir de 4,9</b></span><span class="gv">–</span></div><div class="gb"><i style="width:0"></i><u style="left:66.7%"></u><u style="left:81.7%"></u></div><div class="sub gx"></div></div>
+  <div class="stats">
+    <div class="stat"><b id="fBank">–</b><span>Banca do painel</span></div>
+    <div class="stat"><b id="fDay">–</b><span>Resultado de hoje</span></div>
+    <div class="stat"><b id="fToday">–</b><span>Wins hoje</span></div>
+    <div class="stat"><b id="fStake">–</b><span>Entrada por operação</span></div>
+  </div>
+  <div class="sub">Últimas velas fechadas (mais antiga → mais recente) e a vela atual</div>
+  <div class="strip" id="strip"></div>
+  <div class="bar"><i id="elbar"></i></div>
+  <div class="sub" id="fEval"></div>
+</div>
+
+<div class="card" id="nov">
+  <div class="top" style="margin-bottom:6px">
+    <h1>Entradas novas — régua principal</h1>
+    <span class="chip mut" id="nChip">sem dados</span>
+  </div>
+  <div class="sub" id="nSince" style="margin-bottom:8px"></div>
+  <div class="row" style="align-items:baseline;gap:14px">
+    <div class="big" id="nRate">–</div>
+    <div class="sub" id="nN">0 entradas decididas</div>
+  </div>
+  <div class="scale" id="nScale"></div>
+  <div class="sub" id="nMsg" style="margin-bottom:10px"></div>
+  <table>
+    <thead><tr><th>Ponto</th><th>Faltam</th><th>Previsão</th><th>Alarme (abaixo de)</th><th>Vantagem clara (acima de)</th><th>Situação</th></tr></thead>
+    <tbody id="nTb"></tbody>
+  </table>
+  <div class="sub" style="margin-top:8px">Conta só as entradas feitas <b>depois do ponto de partida</b> (sem o trecho ruim de 09–11/10), comparadas com o esperado de 53,8%. O acumulado desde 09/10, no cartão abaixo, fica como referência. <b>Validação final: 30/11/2026</b> (as 2.000 entradas são só um ponto de acompanhamento).
+    <button id="nReset" style="margin-left:8px;padding:4px 10px;font-size:12px">reiniciar contagem agora</button></div>
+</div>
+
+<div class="card" id="val">
+  <div class="top" style="margin-bottom:6px">
+    <h1>Acumulado desde 09/10 (referência)</h1>
+    <span class="chip mut" id="vChip">sem dados</span>
+  </div>
+  <div class="row" style="align-items:baseline;gap:14px">
+    <div class="big" id="vRate">–</div>
+    <div class="sub" id="vN">0 entradas decididas</div>
+  </div>
+  <div class="scale" id="scale"></div>
+  <div class="sub" id="vMsg" style="margin-bottom:10px"></div>
+  <table>
+    <thead><tr><th>Ponto</th><th>Faltam</th><th>Previsão</th><th>Alarme (acerto abaixo de)</th><th>Vantagem clara (acima de)</th><th>Situação</th></tr></thead>
+    <tbody id="vTb"></tbody>
+  </table>
+  <div class="sub" style="margin-top:8px">Esperado pelo backtest: <b>53,8%</b> (2 anos de IDX, 08h–22h). Equilíbrio com payout de 96%: <b>51,02%</b>. Empates (devolvidos) ficam fora da conta. Alarme = 2 desvios-padrão abaixo do esperado; "vantagem clara" = 2 desvios-padrão acima do equilíbrio. Entre os dois, o resultado é inconclusivo.</div>
+</div>
+
+<div class="card">
+  <h1 style="margin-bottom:4px">Bancas de papel <span class="sub" style="font-weight:400">(mesmas entradas, regras de valor e parada diferentes)</span></h1>
+  <div class="sub" id="bcSub" style="margin-bottom:10px"></div>
+  <table><thead><tr><th>Banca</th><th>Saldo</th><th>Hoje</th><th>Desde 20/10</th><th>Desde 09/10 (simulado)</th><th>Pior dia</th><th>Situação hoje</th></tr></thead><tbody id="bcTb"></tbody></table>
+  <div class="sub" style="margin-top:8px">Soros: 1ª entrada $40; se ganhar, a 2ª é $78,40 (lucro reinvestido); depois volta a $40. Stop win: ao somar +$500 no dia, aquela banca para de entrar até amanhã. Stop loss: o mesmo ao somar −$400. As "entradas ignoradas" são as que a banca teria deixado de fazer. "Desde 20/10" é o acompanhamento real das bancas; "Desde 09/10" aplica as mesmas regras ao histórico do paper para comparar.</div>
+</div>
+
+<div class="card">
+  <h1 style="margin-bottom:10px">Resultado por dia <span class="sub" style="font-weight:400">(entrada do paper)</span></h1>
+  <table><thead><tr><th>Dia</th><th>Entradas</th><th>Acerto</th><th>Resultado</th></tr></thead><tbody id="dTb"></tbody></table>
+</div>
+
+<div class="card">
+  <h1 style="margin-bottom:10px">Operações</h1>
+  <table class="tr"><thead><tr><th>Sinal</th><th>Direção</th><th>Sequência</th><th>4ª vela fechou igual?</th><th>Resultado</th><th>P/L</th></tr></thead><tbody id="fTr"></tbody></table>
+  <div class="sub" style="margin-top:8px">Regra: 4+ velas da mesma cor; o sinal sai ~7s antes do fim da 4ª vela, se ela ainda estiver na mesma cor; a entrada vale na abertura da vela seguinte. Doji = empate (a Ebinex devolve).</div>
+</div>
+
+</div>
+<div id="tabB" style="display:none">
+  <div class="card">
+    <h1 style="margin-bottom:4px">Contra · só a 1ª entrada (depois de 4 velas), no lado oposto</h1>
+    <div class="sub" id="cSub" style="margin-bottom:12px"></div>
+    <div class="stats">
+      <div class="stat"><b id="cBank">–</b><span>banca de papel</span></div>
+      <div class="stat"><b id="cHoje">–</b><span>hoje</span></div>
+      <div class="stat"><b id="cAc">–</b><span>acerto (todas)</span></div>
+      <div class="stat"><b id="cAcI">–</b><span>acerto (1ª entrada)</span></div>
+    </div>
+    <table><thead><tr><th>Versão</th><th>Entradas</th><th>Acerto</th><th>Resultado desde a criação</th><th>Hoje</th><th>Simulado desde 09/10</th></tr></thead><tbody id="cTb"></tbody></table>
+    <div class="sub" style="margin-top:8px">Quando a estratégia atual dá o sinal da <b>1ª entrada</b> (depois de 4 velas iguais), esta aba entra <b>contra</b>: sequência verde → venda; vermelha → compra. Valor fixo, sem gale e sem Soros. Empates ficam fora da conta. Equilíbrio com payout 96%: 51,02%.</div>
+  </div>
+  <div class="card">
+    <h1 style="margin-bottom:10px">Resultado por dia (contra)</h1>
+    <table><thead><tr><th>Dia</th><th>Entradas</th><th>Acerto</th><th>Resultado</th></tr></thead><tbody id="cDia"></tbody></table>
+  </div>
+  <div class="card">
+    <h1 style="margin-bottom:10px">Últimas entradas (contra)</h1>
+    <table><thead><tr><th>Hora</th><th>Direção</th><th>Sequência</th><th>Valor</th><th>Resultado</th><th>P/L</th></tr></thead><tbody id="cOp"></tbody></table>
+  </div>
+</div>
+<div id="tabC" style="display:none">
+  <div class="card">
+    <h1 style="margin-bottom:4px">Janela · entradas normais só das 10h às 15h e das 18h às 22h</h1>
+    <div class="sub" id="jSub" style="margin-bottom:12px"></div>
+    <div class="top" style="margin-bottom:6px"><div class="row" style="align-items:baseline;gap:14px"><div class="big" id="jRate">–</div><div class="sub" id="jN2">0 entradas decididas</div></div><span class="chip mut" id="jChip">sem dados</span></div>
+    <div class="scale" id="jScale"></div>
+    <div class="sub" id="jMsg" style="margin-bottom:12px"></div>
+    <div class="stats">
+      <div class="stat"><b id="jBank">–</b><span>banca de papel</span></div>
+      <div class="stat"><b id="jHoje">–</b><span>hoje</span></div>
+      <div class="stat"><b id="jAc">–</b><span>acerto</span></div>
+      <div class="stat"><b id="jN">–</b><span>entradas</span></div>
+    </div>
+    <table><thead><tr><th>Versão</th><th>Entradas</th><th>Acerto</th><th>Resultado desde a criação</th><th>Hoje</th><th>Simulado desde 09/10 (a $20)</th></tr></thead><tbody id="jTb"></tbody></table>
+    <div class="sub" style="margin-top:8px">Os mesmos sinais da estratégia atual (compra na sequência verde, venda na vermelha), de todas as velas da sequência, mas só com entrada dentro das janelas de horário e valor fixo de $20. Fora delas, o Telegram não avisa. A aba principal continua com todas as entradas, 08h–22h. Equilíbrio com payout 96%: 51,02%.</div>
+  </div>
+  <div class="card">
+    <h1 style="margin-bottom:10px">Resultado por dia (janela)</h1>
+    <table><thead><tr><th>Dia</th><th>Entradas</th><th>Acerto</th><th>Resultado</th></tr></thead><tbody id="jDia"></tbody></table>
+  </div>
+  <div class="card">
+    <h1 style="margin-bottom:10px">Últimas entradas (janela)</h1>
+    <table><thead><tr><th>Hora</th><th>Direção</th><th>Sequência</th><th>Resultado</th><th>P/L</th></tr></thead><tbody id="jOp"></tbody></table>
+  </div>
+</div>
+<div id="tabD" style="display:none">
+  <div class="card">
+    <h1 style="margin-bottom:4px">Cripto M15 · 3 velas verdes seguidas → VENDA</h1>
+    <div class="sub" id="kSub" style="margin-bottom:12px"></div>
+    <div class="stats">
+      <div class="stat"><b id="kBank">–</b><span>resultado (papel)</span></div>
+      <div class="stat"><b id="kHoje">–</b><span>hoje</span></div>
+      <div class="stat"><b id="kAc">–</b><span>acerto</span></div>
+      <div class="stat"><b id="kN">–</b><span>entradas</span></div>
+    </div>
+    <div class="sub" id="kInfo" style="margin-bottom:8px"></div>
+    <div class="sub">Depois de 3 velas de 15 minutos verdes seguidas, aposta-se que a próxima vela fecha vermelha (venda), com entrada na abertura dela. Ativos: ETH e XRP (configurável em <code>dados/cripto.json</code>). O Telegram avisa ~20 s antes do fim da 3ª vela, entre 08h e 22h. Payout de 90%: o equilíbrio é <b>52,63%</b> de acerto. Backtest de 1 ano: ~55% com ETH + XRP; ao vivo ainda em validação.</div>
+  </div>
+  <div class="card"><h1 style="margin-bottom:10px">Resultado por dia (cripto M15)</h1>
+    <table><thead><tr><th>Dia</th><th>Entradas</th><th>Acerto</th><th>Resultado</th></tr></thead><tbody id="kDia"></tbody></table></div>
+  <div class="card"><h1 style="margin-bottom:10px">Últimas entradas (cripto M15)</h1>
+    <table><thead><tr><th>Hora</th><th>Ativo</th><th>Valor</th><th>Resultado</th><th>P/L</th></tr></thead><tbody id="kOp"></tbody></table></div>
+</div>
+<div id="tabE" style="display:none">
+  <div class="card">
+    <h1 style="margin-bottom:4px">MEMX/USDT · só sinais fortes (papel)</h1>
+    <div class="sub" id="mSub" style="margin-bottom:12px"></div>
+    <div class="stats">
+      <div class="stat"><b id="mPnl">–</b><span>resultado (fixo $20)</span></div>
+      <div class="stat"><b id="mHoje">–</b><span>hoje (fixo)</span></div>
+      <div class="stat"><b id="mAc">–</b><span>acerto</span></div>
+      <div class="stat"><b id="mN">–</b><span>entradas</span></div>
+    </div>
+    <table><thead><tr><th>Versão</th><th>Entradas</th><th>Acerto</th><th>Resultado desde a criação</th><th>Hoje</th></tr></thead><tbody id="mTb"></tbody></table>
+    <div class="sub" id="mInfo" style="margin-top:8px"></div>
+    <div class="sub" style="margin-top:8px">Mesma regra do IDX: 4 ou mais velas M1 da mesma cor e <b>força de 4,9 ATR14 ou mais</b>. O Telegram avisa ~15 s antes do fim da vela, entre 08h e 22h, e você entra na abertura da vela seguinte. Payout 96%: equilíbrio em 51,02%. Backtest (3 meses): fortes ~54%; forward (3 semanas): 56%. Configuração em <code>dados/memx.json</code>.</div>
+  </div>
+  <div class="card"><h1 style="margin-bottom:10px">Resultado por dia (MEMX, fixo)</h1>
+    <table><thead><tr><th>Dia</th><th>Entradas</th><th>Acerto</th><th>Resultado</th></tr></thead><tbody id="mDia"></tbody></table></div>
+  <div class="card"><h1 style="margin-bottom:10px">Últimas entradas (MEMX)</h1>
+    <table><thead><tr><th>Hora</th><th>Direção</th><th>Sequência</th><th>Força</th><th>Resultado</th><th>P/L</th></tr></thead><tbody id="mOp"></tbody></table></div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const P = 0.538, BE = 1 / 1.96, POINTS = [500, 1000, 2000, 3000, 5000];
+let LV = null, LVat = 0, lastSig = null, audio = null;
+const hm = t => new Date(t).toLocaleTimeString('pt-BR');
+const mon = n => (n < 0 ? '-' : '+') + '$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const pc = x => (100 * x).toFixed(1).replace('.', ',') + '%';
+const alarm = n => P - 2 * Math.sqrt(P * (1 - P) / n);
+const clear = n => BE + 2 * Math.sqrt(BE * (1 - BE) / n);
+function beep(){ try { audio ||= new (window.AudioContext || window.webkitAudioContext)(); const o = audio.createOscillator(), g = audio.createGain(); o.connect(g); g.connect(audio.destination); o.frequency.value = 880; g.gain.value = .15; o.start(); setTimeout(() => o.stop(), 350); } catch {} }
+
+function status(n, h){
+  if (n < 100) return ['mut', 'poucas entradas para avaliar'];
+  if (h < alarm(n)) return ['bad', 'ABAIXO da faixa de alarme'];
+  if (h > clear(n)) return ['ok', 'ACIMA do equilíbrio, com folga'];
+  return ['warn', 'dentro da faixa — inconclusivo'];
+}
+function drawVal(d){
+  const n = d.total.n, w = d.total.wins, h = n ? w / n : null;
+  $('vRate').textContent = n ? pc(h) : '–';
+  $('vN').textContent = `${w} wins em ${n} entradas decididas` + (d.total.empates ? ` (+${d.total.empates} empates devolvidos)` : '');
+  const [cls, txt] = n ? status(n, h) : ['mut', 'sem dados'];
+  $('vChip').className = 'chip ' + cls; $('vChip').textContent = txt;
+  // escala 40%..65%
+  const lo = 0.40, hi = 0.65, pos = v => Math.max(0, Math.min(100, 100 * (v - lo) / (hi - lo))) + '%';
+  let s = '<div class="track"></div>';
+  if (n >= 30) {
+    s += `<div class="zone" style="left:0;width:${pos(alarm(n))};background:#5a2a2a"></div>`;
+    s += `<div class="zone" style="left:${pos(clear(n))};right:0;background:#1d4a2c"></div>`;
+    s += `<div class="tick" style="left:${pos(alarm(n))}"><span>alarme ${pc(alarm(n))}</span></div>`;
+    s += `<div class="tick" style="left:${pos(clear(n))}"><span>claro ${pc(clear(n))}</span></div>`;
+  }
+  s += `<div class="tick" style="left:${pos(BE)}"><span class="lo">equilíbrio 51,0%</span></div>`;
+  s += `<div class="tick" style="left:${pos(P)}"><span>esperado 53,8%</span></div>`;
+  if (n) s += `<div class="dot ${cls}" style="left:${pos(h)}" title="${pc(h)}"></div>`;
+  $('scale').innerHTML = s;
+  const rate = d.diasComDados ? n / d.diasComDados : null;
+  $('vMsg').textContent = !n ? 'Aguardando as primeiras entradas.'
+    : `Ritmo médio: ${rate ? Math.round(rate) : '–'} entradas por dia em ${d.diasComDados} dia(s) com operação. Hoje: ${d.today.wins}/${d.today.n}${d.today.n ? ' (' + pc(d.today.wins / d.today.n) + ')' : ''}.`;
+  $('vTb').innerHTML = POINTS.map(pt => {
+    const falta = Math.max(0, pt - n), dias = rate && falta ? Math.ceil(falta / rate) : 0;
+    const sit = n >= pt ? (() => { const [c, t] = status(n, h); return `<span class="chip ${c}">${t}</span>`; })() : `<span class="sub">aguardando</span>`;
+    return `<tr><td><b>${pt}</b> entradas</td><td>${falta ? falta : '—'}</td><td>${falta ? (rate ? '~' + dias + ' dia(s)' : '–') : 'atingido'}</td><td>${pc(alarm(pt))}</td><td>${pc(clear(pt))}</td><td>${sit}</td></tr>`;
+  }).join('');
+}
+
+
+// ---- Entradas novas (régua principal) ----
+const NPOINTS = [100, 200, 300, 500, 1000, 2000, 3000, 4000, 5000];
+function drawNovas(d){
+  const nv = d.novas; if (!nv) return;
+  const n = nv.n, w = nv.wins, r = n ? w / n : null;
+  const dt = new Date(nv.desde);
+  $('nSince').textContent = 'Desde ' + dt.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'}) + ' ' + dt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}) + ' · resultado das novas: ' + mon(nv.pnl);
+  $('nRate').textContent = n ? pc(r) : '–';
+  $('nN').textContent = `${w} wins em ${n} entradas decididas` + (nv.empates ? ` (+${nv.empates} empates devolvidos)` : '');
+  const [cls, txt] = n ? (n < 50 ? ['mut', 'poucas entradas novas para avaliar'] : status(n, r)) : ['mut', 'sem dados'];
+  $('nChip').className = 'chip ' + cls; $('nChip').textContent = txt;
+  const lo = 0.40, hi = 0.65, pos = v => Math.max(0, Math.min(100, 100 * (v - lo) / (hi - lo))) + '%';
+  let s = '<div class="track"></div>';
+  if (n >= 30) {
+    s += `<div class="zone" style="left:0;width:${pos(alarm(n))};background:#5a2a2a"></div><div class="zone" style="left:${pos(clear(n))};right:0;background:#1d4a2c"></div>`;
+    s += `<div class="tick" style="left:${pos(alarm(n))}"><span>alarme ${pc(alarm(n))}</span></div><div class="tick" style="left:${pos(clear(n))}"><span>claro ${pc(clear(n))}</span></div>`;
+  }
+  s += `<div class="tick" style="left:${pos(BE)}"><span class="lo">equilíbrio 51,0%</span></div><div class="tick" style="left:${pos(P)}"><span>esperado 53,8%</span></div>`;
+  if (n) s += `<div class="dot ${cls}" style="left:${pos(r)}" title="${pc(r)}"></div>`;
+  $('nScale').innerHTML = s;
+  const rate = d.diasComDados ? d.total.n / d.diasComDados : null;
+  $('nMsg').textContent = n ? `Ritmo médio: ${rate ? Math.round(rate) : '–'} entradas por dia.` : 'Aguardando as primeiras entradas novas.';
+  $('nTb').innerHTML = NPOINTS.map(pt => {
+    const falta = Math.max(0, pt - n), dias = rate && falta ? Math.ceil(falta / rate) : 0;
+    const sit = n >= pt ? (() => { const [c, t] = status(n, r); return `<span class="chip ${c}">${t}</span>`; })() : '<span class="sub">aguardando</span>';
+    return `<tr><td><b>${pt}</b> novas</td><td>${falta ? falta : '—'}</td><td>${falta ? (rate ? '~' + dias + ' dia(s)' : '–') : 'atingido'}</td><td>${pc(alarm(pt))}</td><td>${pc(clear(pt))}</td><td>${sit}</td></tr>`;
+  }).join('');
+}
+$('nReset').onclick = async () => { if (confirm('Reiniciar a contagem das entradas novas a partir de agora?')) { try { await fetch('/api/baseline', {method: 'POST'}); } catch {} } };
+
+function drawRuler(elId, n, r, cls){
+  const lo = 0.40, hi = 0.65, pos = v => Math.max(0, Math.min(100, 100 * (v - lo) / (hi - lo))) + '%';
+  let s = '<div class="track"></div>';
+  if (n >= 30) {
+    s += `<div class="zone" style="left:0;width:${pos(alarm(n))};background:#5a2a2a"></div><div class="zone" style="left:${pos(clear(n))};right:0;background:#1d4a2c"></div>`;
+    s += `<div class="tick" style="left:${pos(alarm(n))}"><span>alarme ${pc(alarm(n))}</span></div><div class="tick" style="left:${pos(clear(n))}"><span>claro ${pc(clear(n))}</span></div>`;
+  }
+  s += `<div class="tick" style="left:${pos(BE)}"><span class="lo">equilíbrio 51,0%</span></div><div class="tick" style="left:${pos(P)}"><span>esperado 53,8%</span></div>`;
+  if (n) s += `<div class="dot ${cls}" style="left:${pos(r)}" title="${pc(r)}"></div>`;
+  $(elId).innerHTML = s;
+}
+
+function drawFwd(){
+  const d = LV; if (!d) return;
+  const run = d.on || d.starting;
+  $('fwdBtn').textContent = run ? '⏹ Desligar acompanhamento' : '▶ Ligar acompanhamento';
+  $('fwdSub').textContent = d.starting ? 'Conectando ao gráfico…' : d.warn ? '⚠ ' + d.warn
+    : d.on ? (d.connected ? `Ao vivo · hora do servidor ${hm(d.serverNow + (Date.now() - LVat))} · sinais entre ${d.cfg.hours[0]}h e ${d.cfg.hours[1]}h` : 'Conectado, aguardando dados…')
+    : 'Desligado. Só lê o gráfico; não envia ordens.';
+  { const j = d.janela; if (j) { const pc2 = (w, n) => n ? pc(w / n) : '–', cl = v => v < 0 ? 'neg' : v > 0 ? 'pos' : '';
+    $('jSub').textContent = 'Contando desde ' + new Date(j.desde).toLocaleString('pt-BR') + ' · saldo inicial $' + j.bank0.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' · entrada fixa $' + j.stake;
+    $('jBank').textContent = '$' + j.banca.toLocaleString('en-US', {minimumFractionDigits: 2}); $('jBank').className = cl(j.pnl);
+    { const n = j.n, r = n ? j.w / n : null, [cl2, tx] = n ? (n < 50 ? ['mut', 'poucas entradas para avaliar'] : status(n, r)) : ['mut', 'sem dados'];
+      $('jRate').textContent = n ? pc(r) : '–'; $('jN2').textContent = `${j.w} wins em ${n} entradas decididas` + (j.e ? ` (+${j.e} empates devolvidos)` : ''); $('jChip').className = 'chip ' + cl2; $('jChip').textContent = tx; drawRuler('jScale', n, r, cl2);
+      $('jMsg').textContent = 'Régua da janela (mesma lógica da principal): alarme = 2 desvios abaixo do esperado; claro = 2 desvios acima do equilíbrio. Validação final: 30/11/2026.'; }
+    $('jHoje').textContent = mon(j.hoje.pnl); $('jHoje').className = cl(j.hoje.pnl); $('jAc').textContent = pc2(j.w, j.n); $('jN').textContent = j.n;
+    $('jTb').innerHTML = `<tr><td><b>Fixo $${j.stake}, janelas</b></td><td>${j.n}</td><td>${pc2(j.w, j.n)}</td><td class="${cl(j.pnl)}">${mon(j.pnl)}</td><td class="${cl(j.hoje.pnl)}">${mon(j.hoje.pnl)} (${j.hoje.n})</td><td class="${cl(j.total.pnl)}">${mon(j.total.pnl)} · ${pc2(j.total.w, j.total.n)}</td></tr>`;
+    $('jDia').innerHTML = j.dias.map(o => `<tr><td>${o.dia.split('-').reverse().slice(0, 2).join('/')}</td><td>${o.n}</td><td>${pc2(o.w, o.n)}</td><td class="${cl(o.pnl)}">${mon(o.pnl)}</td></tr>`).join('') || '<tr><td colspan=4>sem dados</td></tr>';
+    $('jOp').innerHTML = j.linhas.map(l => `<tr><td>${new Date(l.t).toLocaleTimeString('pt-BR')}</td><td class="${l.dir}">${l.dir === 'G' ? 'COMPRA ▲' : 'VENDA ▼'}</td><td>${l.run}ª vela</td><td>${l.res === 'W' ? '✅ win' : l.res === 'L' ? '❌ loss' : '➖ empate'}</td><td class="${cl(l.pnl)}">${mon(l.pnl)}</td></tr>`).join('') || '<tr><td colspan=5>aguardando as primeiras entradas na janela</td></tr>'; } }
+  { const c = d.contra; if (c) { const g = c.semGale, pc2 = (w, n) => n ? pc(w / n) : '–', cl = v => v < 0 ? 'neg' : v > 0 ? 'pos' : '';
+    $('cSub').textContent = 'Contando desde ' + new Date(c.desde).toLocaleString('pt-BR') + ' · saldo inicial $' + c.bank0.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' · entrada fixa $' + c.stake;
+    $('cBank').textContent = '$' + g.banca.toLocaleString('en-US', {minimumFractionDigits: 2}); $('cBank').className = g.pnl > 0 ? 'pos' : g.pnl < 0 ? 'neg' : '';
+    $('cHoje').textContent = mon(g.hoje.pnl); $('cHoje').className = cl(g.hoje.pnl); $('cAc').textContent = pc2(g.w, g.n); $('cAcI').textContent = pc2(g.iniW, g.iniN);
+    const row = (nome, o) => `<tr><td><b>${nome}</b></td><td>${o.n}</td><td>${pc2(o.w, o.n)}</td><td class="${cl(o.pnl)}">${mon(o.pnl)}</td><td class="${cl(o.hoje.pnl)}">${mon(o.hoje.pnl)} (${o.hoje.n})</td><td class="${cl(o.total.pnl)}">${mon(o.total.pnl)} · ${pc2(o.total.w, o.total.n)}</td></tr>`;
+    $('cTb').innerHTML = row('Valor fixo, 1ª entrada', g);
+    $('cDia').innerHTML = g.dias.map(o => `<tr><td>${o.dia.split('-').reverse().slice(0, 2).join('/')}</td><td>${o.n}</td><td>${pc2(o.w, o.n)}</td><td class="${cl(o.pnl)}">${mon(o.pnl)}</td></tr>`).join('') || '<tr><td colspan=4>sem dados</td></tr>';
+    $('cOp').innerHTML = g.linhas.map(l => `<tr><td>${new Date(l.t).toLocaleTimeString('pt-BR')}</td><td class="${l.dir}">${l.dir === 'G' ? 'COMPRA ▲' : 'VENDA ▼'}</td><td>${l.run}ª vela</td><td>$${l.stake}${l.gale ? ' (gale)' : ''}</td><td>${l.res === 'W' ? '✅ win' : l.res === 'L' ? '❌ loss' : '➖ empate'}</td><td class="${cl(l.pnl)}">${mon(l.pnl)}</td></tr>`).join('') || '<tr><td colspan=6>aguardando as primeiras entradas</td></tr>'; } }
+  { const b = d.bancas; if (b) { $('bcSub').textContent = 'Contando desde ' + new Date(b.desde).toLocaleDateString('pt-BR') + ' · saldo inicial $' + b.bank0.toLocaleString('en-US', {minimumFractionDigits: 2});
+    $('bcTb').innerHTML = b.lista.map(x => `<tr><td><b>${x.nome}</b></td><td>$${x.banca.toLocaleString('en-US', {minimumFractionDigits: 2})}</td><td class="${x.hoje < 0 ? 'neg' : x.hoje > 0 ? 'pos' : ''}">${mon(x.hoje)} (${x.hojeN})</td><td class="${x.desde < 0 ? 'neg' : x.desde > 0 ? 'pos' : ''}">${mon(x.desde)} (${x.desdeN})</td><td class="${x.total < 0 ? 'neg' : x.total > 0 ? 'pos' : ''}">${mon(x.total)}</td><td>${mon(x.piorDia)}</td><td>${x.stopWin ? (x.paradoHoje ? '🛑 parou (' + (x.motivoHoje === 'loss' ? 'stop loss −$' + x.stopLoss : 'stop win +$' + x.stopWin) + ') · ' + x.hojeIgn + ' ignoradas' : 'operando') : 'sem parada'}</td></tr>`).join(''); } }
+  $('dTb').innerHTML = (d.porDia || []).map(o => `<tr><td>${o.dia.split('-').reverse().slice(0, 2).join('/')}</td><td>${o.n}</td><td>${pc(o.wins / o.n)}</td><td class="${o.pnl < 0 ? 'neg' : o.pnl > 0 ? 'pos' : ''}">${mon(o.pnl)}</td></tr>`).join('') || '<tr><td colspan=4>sem dados</td></tr>';
+  $('fBank').textContent = '$' + d.bank.toLocaleString('en-US', {minimumFractionDigits: 2}); $('fBank').className = d.pnl > 0 ? 'pos' : d.pnl < 0 ? 'neg' : '';
+  $('fDay').textContent = mon(d.today.pnl); $('fDay').className = d.today.pnl > 0 ? 'pos' : d.today.pnl < 0 ? 'neg' : '';
+  $('fToday').textContent = `${d.today.wins}/${d.today.n}`; $('fStake').textContent = '$' + d.cfg.stake;
+  const nowS = d.serverNow + (Date.now() - LVat), virou = !!(d.cur && nowS >= d.cur.t + 60000);   // a vela virou pelo relógio, mas o feed ainda não mandou a nova: mostra a anterior como fechada e a nova como "aguardando"
+  const fechadas = virou ? [...d.lastClosed, { t: d.cur.t, k: d.cur.k }].slice(-d.lastClosed.length) : d.lastClosed;
+  $('strip').innerHTML = fechadas.map(c => `<div class="cd ${c.k}" title="${hm(c.t)}"></div>`).join('') + (d.cur ? `<div class="cd ${virou ? 'D' : d.cur.k} cur" title="${virou ? 'vela nova: aguardando o 1º dado do gráfico' : 'vela atual'}"></div>` : '')
+    + `<span class="sub" style="margin-left:8px">${d.run ? d.run + ' ' + (d.runColor === 'G' ? 'verdes' : 'vermelhas') + ' fechadas seguidas' : ''}</span>`;
+  const el = d.elapsed == null ? 0 : nowS % 60000;
+  drawGauge('gI', d.vivo && d.vivo.run, d.vivo && d.vivo.forca, d.vivo && d.vivo.cor);
+  $('elbar').style.width = (100 * el / 60000) + '%';
+  $('fEval').textContent = d.on && d.lastEval ? `Última avaliação (${hm(d.lastEval.t + 53000)}): ${d.lastEval.motivo}` : '';
+  const sg = $('sig'), s = d.signal;
+  if (s && d.on && s.forte === true) {
+    const left = Math.max(0, Math.round((s.entryT - (d.serverNow + (Date.now() - LVat))) / 1000));
+    sg.className = s.dir; sg.style.display = 'block';
+    const tag = '💪 SINAL FORTE · <u>IDX/USDT</u>';
+    sg.innerHTML = s.entrou ? `<b>${s.dir === 'G' ? '▲ COMPRA' : '▼ VENDA'} — entrada aberta</b>${tag} · aguardando o fechamento da vela`
+      : `<b>${s.dir === 'G' ? '▲ COMPRAR' : '▼ VENDER'} agora</b>${tag}<br>${s.run}ª vela ${s.dir === 'G' ? 'verde' : 'vermelha'} seguida · entra na abertura de ${hm(s.entryT)} (faltam ${left}s)`;
+    if (lastSig !== s.entryT) { lastSig = s.entryT; if ($('snd').checked) { beep(); setTimeout(beep, 450); } }
+  } else sg.style.display = 'none';
+  $('fTr').innerHTML = d.trades.length ? d.trades.slice(0, 30).map(t => `<tr><td>${hm(t.sigT + 53000)}</td><td class="${t.dir}">${t.dir === 'G' ? '▲ compra' : '▼ venda'}</td><td>${t.run}</td>
+    <td>${t.sinalConfirmado == null ? '–' : t.sinalConfirmado ? 'sim' : 'NÃO (virou)'}</td>
+    <td>${t.status === 'aberto' ? 'aberta…' : t.status === 'sem-dado' ? 'sem dados' : t.empate ? 'EMPATE (devolvido)' : t.win ? 'WIN' : 'LOSS'}</td>
+    <td class="${t.pnl > 0 ? 'pos' : t.pnl < 0 ? 'neg' : ''}">${t.pnl != null ? mon(t.pnl) : '–'}</td></tr>`).join('')
+    : '<tr><td colspan="6" class="sub">Nenhuma operação ainda.</td></tr>';
+  drawVal(d); drawNovas(d);
+}
+async function poll(){
+  try { LV = await (await fetch('/api/live')).json(); LVat = Date.now(); drawFwd(); }
+  catch { $('fwdSub').textContent = '⚠ Servidor offline — rode "node serve.mjs".'; }
+  setTimeout(poll, LV && LV.on ? 1000 : 4000);
+}
+$('fwdBtn').onclick = async () => {
+  if ($('snd').checked) beep();
+  $('fwdBtn').disabled = true;
+  try { LV = await (await fetch('/api/live?on=' + (LV && (LV.on || LV.starting) ? 0 : 1), {method: 'POST'})).json(); LVat = Date.now(); } catch {}
+  $('fwdBtn').disabled = false; drawFwd();
+};
+poll();
+
+(function () { const P = { P: ['tabP', 'tbP'], F: ['tabF', 'tbF'], I: ['tabI', 'tbI'], M5: ['tabM5', 'tbM5'], A: ['tabA', 'tbA'], B: ['tabB', 'tbB'], C: ['tabC', 'tbC'], D: ['tabD', 'tbD'], E: ['tabE', 'tbE'] };
+  const show = w => { if (!P[w]) w = 'P'; for (const k in P) { document.getElementById(P[k][0]).style.display = k === w ? '' : 'none'; document.getElementById(P[k][1]).classList.toggle('on', k === w); } try { localStorage.setItem('aba2', w); } catch {} };
+  for (const k in P) document.getElementById(P[k][1]).onclick = () => show(k);
+  document.getElementById('tbMore').onclick = () => { const l = document.getElementById('legacyTabs'); l.style.display = l.style.display === 'none' ? 'flex' : 'none'; };
+  let w = 'P'; try { w = localStorage.getItem('aba2') || 'P'; } catch {} show(w); })();
+async function drawCripto() { try { const k = await (await fetch('/api/cripto')).json(); const cl = v => v < 0 ? 'neg' : v > 0 ? 'pos' : '', pc2 = (w, n) => n ? pc(w / n) : '–';
+  $('kSub').textContent = 'Contando desde ' + new Date(k.cfg.desde).toLocaleString('pt-BR') + ' · ativos: ' + k.cfg.assets.map(a => a.replace('USDT', '/USDT')).join(', ') + ' · entrada fixa $' + k.cfg.stake + ' · janela 08h–22h';
+  $('kBank').textContent = mon(k.pnl); $('kBank').className = cl(k.pnl); $('kHoje').textContent = mon(k.hoje.pnl); $('kHoje').className = cl(k.hoje.pnl); $('kAc').textContent = pc2(k.wins, k.n); $('kN').textContent = k.n + (k.abertas ? ' (+' + k.abertas + ' aberta)' : '');
+  $('kInfo').textContent = Object.entries(k.info).map(([s, i]) => s.replace('USDT', '') + ': ' + (i.erro ? i.erro : (i.seq || []).map(v => v === 1 ? '🟩' : v === -1 ? '🟥' : '▫️').join('') + ' (' + new Date(i.em).toLocaleTimeString('pt-BR') + ')')).join('   ·   ') || 'aguardando a próxima verificação (a cada 15 minutos)';
+  $('kDia').innerHTML = k.dias.map(o => `<tr><td>${o.dia.split('-').reverse().slice(0, 2).join('/')}</td><td>${o.n}</td><td>${pc2(o.w, o.n)}</td><td class="${cl(o.pnl)}">${mon(o.pnl)}</td></tr>`).join('') || '<tr><td colspan=4>sem dados</td></tr>';
+  $('kOp').innerHTML = k.linhas.map(l => `<tr><td>${new Date(l.t).toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</td><td>${l.asset.replace('USDT', '/USDT')}</td><td>$${l.stake}${l.manual ? " ✎" : ""}</td><td>${l.status === 'aberto' ? '⏳ aberta' : l.status !== 'fechado' ? l.status : l.empate ? '➖ empate' : l.win ? '✅ win' : '❌ loss'}</td><td class="${cl(l.pnl || 0)}">${l.status === 'fechado' ? mon(l.pnl) : ''}</td></tr>`).join('') || '<tr><td colspan=5>aguardando o primeiro sinal</td></tr>'; } catch {} }
+setInterval(drawCripto, 3000); drawCripto();
+function buildTab(px, titulo, nota) {
+  return `<div class="card"><h1 style="margin-bottom:4px">${titulo}</h1><div class="sub" id="${px}Sub" style="margin-bottom:12px"></div>
+    <div class="stats"><div class="stat"><b id="${px}Bank">–</b><span>banca de papel</span></div><div class="stat"><b id="${px}Hoje">–</b><span>hoje</span></div><div class="stat"><b id="${px}Ac">–</b><span>acerto</span></div><div class="stat"><b id="${px}N">–</b><span>entradas</span></div></div>
+    <table><thead><tr><th>Gráfico</th><th>Entradas</th><th>Acerto</th><th>Resultado</th></tr></thead><tbody id="${px}Tb"></tbody></table>
+    <div class="top" style="margin:12px 0 6px"><div class="row" style="align-items:baseline;gap:14px"><div class="big" id="${px}Rate">–</div><div class="sub" id="${px}N2"></div></div><span class="chip mut" id="${px}Chip">sem dados</span></div>
+    <div class="scale" id="${px}Scale"></div><div class="sub">${nota}</div></div>
+  <div class="card"><h1 style="margin-bottom:10px">Resultado por dia</h1><table><thead><tr><th>Dia</th><th>Entradas</th><th>Acerto</th><th>Resultado</th></tr></thead><tbody id="${px}Dia"></tbody></table></div>
+  <div class="card"><h1 style="margin-bottom:10px">Últimas entradas</h1><table><thead><tr><th>Hora</th><th>Gráfico</th><th>Direção</th><th>Seq.</th><th>Força</th><th>Valor</th><th>Resultado</th><th>P/L</th></tr></thead><tbody id="${px}Op"></tbody></table></div>`;
+}
+document.getElementById('tabP').innerHTML = `<div id="pLiveSlot"></div>
+  <div class="card" id="mxCard"><div class="top" style="margin-bottom:6px"><h1>MEMX/USDT M1 · ao vivo</h1><span class="chip mut" id="mxChip">aguardando</span></div>
+    <div id="sigM"></div>
+    <div class="gauge" id="gM"><div class="gt"><span>Força da sequência · <b>atenção a partir de 4,0 · sinal forte a partir de 4,9</b></span><span class="gv">–</span></div><div class="gb"><i style="width:0"></i><u style="left:66.7%"></u><u style="left:81.7%"></u></div><div class="sub gx"></div></div>
+    <div class="strip" id="mxStrip"></div><div class="sub" id="mxTxt">Lendo o gráfico…</div></div>` + buildTab('p', 'Sinais fortes · IDX + MEMX · Soros nível 1', 'Só sinais com força de 4,9 ATR ou mais (Telegram avisa 15 s antes). Soros nível 1: 1ª entrada $20, se ganhar a 2ª vale $39; depois volta a $20. Banca de papel começa no valor que estava na aba das janelas. Validação do filtro: 30/11/2026 (53% ou mais com ~500 entradas fortes desde 29/10).');
+document.getElementById('tabF').innerHTML = buildTab('f', 'Fixa · mesmos sinais fortes, $20 em cada entrada', 'Mesmos sinais da aba principal, sem Soros. Serve de comparação com a gestão principal.');
+document.getElementById('tabI').innerHTML = buildTab('i', 'Inverso · faz o CONTRÁRIO de cada sinal forte, $20 fixo (papel)', 'Teste de hipótese: se a estratégia perdeu a vantagem (ou virou), operar o contrário daria lucro. Cada sinal forte de COMPRA vira VENDA e vice-versa. Só papel — NÃO é recomendação. Equilíbrio com payout 96%: 51,02%. Só vale olhar com 100+ entradas.');
+document.getElementById('pLiveSlot').appendChild(document.getElementById('fwd'));
+function drawForteTab(px, o, cfg) {
+  const cl = v => v < 0 ? 'neg' : v > 0 ? 'pos' : '', pc2 = (w, n) => n ? pc(w / n) : '–';
+  $(px + 'Sub').textContent = 'Contando desde ' + new Date(cfg.desde).toLocaleString('pt-BR') + ' · saldo inicial $' + cfg.bank0.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' · base $' + cfg.stake;
+  $(px + 'Bank').textContent = '$' + o.banca.toLocaleString('en-US', {minimumFractionDigits: 2}); $(px + 'Bank').className = cl(o.pnl);
+  $(px + 'Hoje').textContent = mon(o.hoje.pnl); $(px + 'Hoje').className = cl(o.hoje.pnl); $(px + 'Ac').textContent = pc2(o.w, o.n); $(px + 'N').textContent = o.n;
+  $(px + 'Tb').innerHTML = Object.entries(o.ativos).map(([k, a]) => `<tr><td><b>${k}</b></td><td>${a.n}</td><td>${pc2(a.w, a.n)}</td><td class="${cl(a.pnl)}">${mon(a.pnl)}</td></tr>`).join('');
+  const n = o.n, r = n ? o.w / n : null, [c2, tx] = n ? (n < 50 ? ['mut', 'poucas entradas para avaliar'] : status(n, r)) : ['mut', 'sem dados'];
+  $(px + 'Rate').textContent = n ? pc(r) : '–'; $(px + 'N2').textContent = `${o.w} wins em ${n} entradas fortes`; $(px + 'Chip').className = 'chip ' + c2; $(px + 'Chip').textContent = tx; drawRuler(px + 'Scale', n, r, c2);
+  $(px + 'Dia').innerHTML = o.dias.map(d => `<tr><td>${d.dia.split('-').reverse().slice(0, 2).join('/')}</td><td>${d.n}</td><td>${pc2(d.w, d.n)}</td><td class="${cl(d.pnl)}">${mon(d.pnl)}</td></tr>`).join('') || '<tr><td colspan=4>sem dados</td></tr>';
+  $(px + 'Op').innerHTML = o.linhas.map(l => `<tr><td>${new Date(l.t).toLocaleTimeString('pt-BR')}${l.rec ? ' <span title="recuperada pelas velas (o PC estava dormindo)">↺</span>' : ''}</td><td>${l.ativo}</td><td class="${l.dir}">${l.dir === 'G' ? 'COMPRA ▲' : 'VENDA ▼'}</td><td>${l.run}ª</td><td>${l.forca ?? '–'}</td><td>$${l.stake}${l.manual ? " ✎" : ""}</td><td>${l.res === 'W' ? '✅ win' : l.res === 'L' ? '❌ loss' : '➖ empate'}</td><td class="${cl(l.pnl)}">${mon(l.pnl)}</td></tr>`).join('') || '<tr><td colspan=8>aguardando o primeiro sinal forte</td></tr>';
+}
+function drawGauge(id, run, forca, cor) { const e = $(id); if (!e) return; const v = forca == null || !run ? null : forca, ok = v != null && run >= 4 && v >= 4.9, w = v != null && run >= 3 && v >= 4.0;
+  e.className = 'gauge' + (ok ? ' ok' : w ? ' warn' : ''); e.querySelector('.gv').textContent = v == null ? '–' : v.toFixed(1).replace('.', ',');
+  e.querySelector('i').style.width = v == null ? '0' : Math.min(100, v / 6 * 100) + '%';
+  e.querySelector('.gx').textContent = v == null ? 'Sem sequência no momento.' : `${run} vela(s) ${cor === 'G' ? 'verde(s)' : 'vermelha(s)'} seguidas · ` + (ok ? '💪 NO NÍVEL DE SINAL FORTE — o aviso "COMPRAR/VENDER AGORA" sai ~15 s antes de a vela fechar' : w ? '👀 em atenção: abra o gráfico e acompanhe' : run < 4 ? 'precisa de 4 velas e força 4,9' : 'força ainda baixa'); }
+async function drawFortes() { try { const f = await (await fetch('/api/fortes')).json(); drawForteTab('p', f.soros, f.cfg); drawForteTab('f', f.fixo, f.cfg); if (f.inverso) drawForteTab('i', f.inverso, f.cfg);
+  { const m0 = f.memx; drawGauge('gM', m0 && m0.run, m0 && m0.forca, m0 && m0.velas && m0.velas.length ? m0.velas.at(-1).k : null); }
+  const m = f.memx, e = m && m.entrada, sm = $('sigM'); if (e && Date.now() < e.entryT + 60000) { const left = Math.max(0, Math.round((e.entryT - Date.now()) / 1000)); sm.className = e.dir; sm.style.display = 'block';
+    sm.innerHTML = `<b>${e.dir === 'G' ? '▲ COMPRAR' : '▼ VENDER'} agora</b>💪 SINAL FORTE · <u>MEMX/USDT</u><br>${e.run}ª vela ${e.dir === 'G' ? 'verde' : 'vermelha'} seguida · ` + (left > 0 ? `entra na abertura de ${hm(e.entryT)} (faltam ${left}s)` : 'entrada aberta, aguardando o fechamento'); } else sm.style.display = 'none';
+  if (m && m.velas) { $('mxStrip').innerHTML = m.velas.map((v, i) => `<span class="cd ${v.k}${i === m.velas.length - 1 ? ' cur' : ''}"></span>`).join('') + (m.run ? `<span class="sub" style="margin-left:8px">${m.run} ${m.cur && m.velas.at(-1).k === 'G' ? 'verdes' : 'vermelhas'} seguidas</span>` : '');
+    const forte = m.forca != null && m.forca >= 4.9; $('mxChip').className = 'chip ' + (forte && m.run >= 4 ? 'ok' : m.run >= 3 ? 'warn' : 'mut'); $('mxChip').textContent = forte && m.run >= 4 ? '💪 FORTE' : m.run >= 3 ? 'atenção' : 'ao vivo';
+    $('mxTxt').textContent = `Sequência: ${m.run || 0} vela(s) · força ${m.forca ?? '–'} (forte a partir de 4,9) · atualizado ${new Date(m.em).toLocaleTimeString('pt-BR')}`; } else { $('mxTxt').textContent = 'Fora do horário (08h–22h) ou aguardando a leitura do MEMX.'; } } catch {} }
+setInterval(drawFortes, 2000); drawFortes();
+async function drawM5() { try { const m = await (await fetch('/api/m5')).json();
+  document.getElementById('m5Rate').textContent = m.n ? (100 * m.w / m.n).toFixed(1).replace('.', ',') + '%' : '–'; document.getElementById('m5N').textContent = m.n + (m.abertas ? ' (+' + m.abertas + ' aberta)' : ''); document.getElementById('m5Pnl').textContent = (m.pnl < 0 ? '-$' : '$') + Math.abs(m.pnl).toFixed(2);
+  document.getElementById('m5Tb').innerHTML = (m.linhas || []).map(t => `<tr><td>${new Date(t.entryT).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}</td><td class="${t.dir}">${t.dir === 'G' ? 'COMPRA ▲' : 'VENDA ▼'}</td><td>${t.forca}</td><td>${t.status === 'aberto' ? '⏳ aberta' : t.empate ? '➖ empate' : t.win ? '✅ win' : '❌ loss'}</td><td>${t.pnl != null ? (t.pnl < 0 ? '-$' : '$') + Math.abs(t.pnl).toFixed(2) : ''}</td></tr>`).join('') || '<tr><td colspan=5>sem entradas ainda</td></tr>'; } catch {} }
+setInterval(drawM5, 5000); drawM5();
+async function drawMemx() { try { const m = await (await fetch('/api/memx')).json(); const cl = v => v < 0 ? 'neg' : v > 0 ? 'pos' : '', pc2 = (w, n) => n ? pc(w / n) : '–', f = m.fixo, s = m.soros;
+  $('mSub').textContent = 'Contando desde ' + new Date(m.cfg.desde).toLocaleString('pt-BR') + ' · entrada base $' + m.cfg.stake + ' · janela 08h–22h';
+  $('mPnl').textContent = mon(f.pnl); $('mPnl').className = cl(f.pnl); $('mHoje').textContent = mon(f.hoje.pnl); $('mHoje').className = cl(f.hoje.pnl); $('mAc').textContent = pc2(f.w, f.n); $('mN').textContent = f.n + (m.abertas ? ' (+' + m.abertas + ' aberta)' : '');
+  const row = (nome, o) => `<tr><td><b>${nome}</b></td><td>${o.n}</td><td>${pc2(o.w, o.n)}</td><td class="${cl(o.pnl)}">${mon(o.pnl)}</td><td class="${cl(o.hoje.pnl)}">${mon(o.hoje.pnl)} (${o.hoje.n})</td></tr>`;
+  $('mTb').innerHTML = row('Fixo $' + m.cfg.stake, f) + row('Soros nível 1 ($' + m.cfg.stake + ' / $' + (m.cfg.stake * 1.96).toFixed(0) + ')', s);
+  $('mInfo').textContent = m.info ? (m.info.erro ? 'Última leitura: ' + m.info.erro : 'Última leitura ' + new Date(m.info.em).toLocaleTimeString('pt-BR') + ': vela ' + (m.info.cor > 0 ? '🟩' : m.info.cor < 0 ? '🟥' : '▫️') + (m.info.run ? ' · sequência ' + m.info.run + ' · força ' + m.info.forca : '')) : 'aguardando a primeira leitura';
+  $('mDia').innerHTML = f.dias.map(o => `<tr><td>${o.dia.split('-').reverse().slice(0, 2).join('/')}</td><td>${o.n}</td><td>${pc2(o.w, o.n)}</td><td class="${cl(o.pnl)}">${mon(o.pnl)}</td></tr>`).join('') || '<tr><td colspan=4>sem dados</td></tr>';
+  $('mOp').innerHTML = f.linhas.map(l => `<tr><td>${new Date(l.t).toLocaleTimeString('pt-BR')}</td><td class="${l.dir}">${l.dir === 'G' ? 'COMPRA ▲' : 'VENDA ▼'}</td><td>${l.run}ª vela</td><td>${l.forca}</td><td>${l.res === 'W' ? '✅ win' : l.res === 'L' ? '❌ loss' : '➖ empate'}</td><td class="${cl(l.pnl)}">${mon(l.pnl)}</td></tr>`).join('') || '<tr><td colspan=6>aguardando o primeiro sinal forte</td></tr>'; } catch {} }
+setInterval(drawMemx, 3000); drawMemx();
+</script>
+</body>
+</html>

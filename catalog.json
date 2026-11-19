@@ -1,0 +1,500 @@
+{
+  "geradoEm": "2026-10-07T14:42:05.930Z",
+  "ativo": "IDXUSDT",
+  "horas": 5,
+  "resumo": {
+    "ciclos": 68,
+    "win0": 32,
+    "win1": 21,
+    "win2": 6,
+    "loss": 9,
+    "taxaWin": 86.8,
+    "ultimoWin": "11:35 (win1)",
+    "lossesSeguidos": 0
+  },
+  "blocos": [
+    {
+      "bloco": "06:00",
+      "t": 1791363600000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "06:05",
+      "t": 1791363900000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "06:10",
+      "t": 1791364200000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "06:15",
+      "t": 1791364500000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "06:20",
+      "t": 1791364800000,
+      "alvo": "R",
+      "resultado": "win2",
+      "entrada": null
+    },
+    {
+      "bloco": "06:25",
+      "t": 1791365100000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "06:30",
+      "t": 1791365400000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "06:35",
+      "t": 1791365700000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "06:40",
+      "t": 1791366000000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "06:45",
+      "t": 1791366300000,
+      "alvo": "R",
+      "resultado": "win2",
+      "entrada": null
+    },
+    {
+      "bloco": "06:50",
+      "t": 1791366600000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "06:55",
+      "t": 1791366900000,
+      "alvo": "R",
+      "resultado": "loss",
+      "entrada": null
+    },
+    {
+      "bloco": "07:00",
+      "t": 1791367200000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "07:05",
+      "t": 1791367500000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "07:10",
+      "t": 1791367800000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "07:15",
+      "t": 1791368100000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "07:20",
+      "t": 1791368400000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "07:25",
+      "t": 1791368700000,
+      "alvo": "G",
+      "resultado": "win2",
+      "entrada": null
+    },
+    {
+      "bloco": "07:30",
+      "t": 1791369000000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "07:35",
+      "t": 1791369300000,
+      "alvo": "R",
+      "resultado": "win2",
+      "entrada": null
+    },
+    {
+      "bloco": "07:40",
+      "t": 1791369600000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "07:45",
+      "t": 1791369900000,
+      "alvo": "R",
+      "resultado": "loss",
+      "entrada": null
+    },
+    {
+      "bloco": "07:50",
+      "t": 1791370200000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "07:55",
+      "t": 1791370500000,
+      "alvo": "R",
+      "resultado": "loss",
+      "entrada": null
+    },
+    {
+      "bloco": "08:00",
+      "t": 1791370800000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "08:05",
+      "t": 1791371100000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "08:10",
+      "t": 1791371400000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "08:15",
+      "t": 1791371700000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "08:20",
+      "t": 1791372000000,
+      "alvo": "G",
+      "resultado": "loss",
+      "entrada": null
+    },
+    {
+      "bloco": "08:25",
+      "t": 1791372300000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "08:30",
+      "t": 1791372600000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "08:35",
+      "t": 1791372900000,
+      "alvo": "G",
+      "resultado": "win2",
+      "entrada": null
+    },
+    {
+      "bloco": "08:40",
+      "t": 1791373200000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "08:45",
+      "t": 1791373500000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "08:50",
+      "t": 1791373800000,
+      "alvo": "R",
+      "resultado": "loss",
+      "entrada": null
+    },
+    {
+      "bloco": "08:55",
+      "t": 1791374100000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "09:00",
+      "t": 1791374400000,
+      "alvo": "R",
+      "resultado": "loss",
+      "entrada": null
+    },
+    {
+      "bloco": "09:05",
+      "t": 1791374700000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "09:10",
+      "t": 1791375000000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "09:15",
+      "t": 1791375300000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "09:20",
+      "t": 1791375600000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "09:25",
+      "t": 1791375900000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "09:30",
+      "t": 1791376200000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "09:35",
+      "t": 1791376500000,
+      "alvo": "G",
+      "resultado": "loss",
+      "entrada": null
+    },
+    {
+      "bloco": "09:40",
+      "t": 1791376800000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "09:45",
+      "t": 1791377100000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "09:50",
+      "t": 1791377400000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "09:55",
+      "t": 1791377700000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "10:00",
+      "t": 1791378000000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "10:05",
+      "t": 1791378300000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "10:10",
+      "t": 1791378600000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "10:15",
+      "t": 1791378900000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "10:20",
+      "t": 1791379200000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "10:25",
+      "t": 1791379500000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "10:30",
+      "t": 1791379800000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "10:35",
+      "t": 1791380100000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "10:40",
+      "t": 1791380400000,
+      "alvo": "R",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "10:45",
+      "t": 1791380700000,
+      "alvo": "R",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "10:50",
+      "t": 1791381000000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "10:55",
+      "t": 1791381300000,
+      "alvo": "G",
+      "resultado": "loss",
+      "entrada": null
+    },
+    {
+      "bloco": "11:00",
+      "t": 1791381600000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "11:05",
+      "t": 1791381900000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "11:10",
+      "t": 1791382200000,
+      "alvo": "G",
+      "resultado": "loss",
+      "entrada": null
+    },
+    {
+      "bloco": "11:15",
+      "t": 1791382500000,
+      "alvo": "G",
+      "resultado": "win2",
+      "entrada": null
+    },
+    {
+      "bloco": "11:20",
+      "t": 1791382800000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "11:25",
+      "t": 1791383100000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "11:30",
+      "t": 1791383400000,
+      "alvo": "G",
+      "resultado": "win0",
+      "entrada": null
+    },
+    {
+      "bloco": "11:35",
+      "t": 1791383700000,
+      "alvo": "G",
+      "resultado": "win1",
+      "entrada": null
+    },
+    {
+      "bloco": "11:40",
+      "t": 1791384000000,
+      "alvo": "G",
+      "resultado": "pendente",
+      "entrada": null
+    }
+  ]
+}

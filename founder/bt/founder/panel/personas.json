@@ -1,0 +1,222 @@
+[
+ {
+  "id": "P001",
+  "name": "Ada",
+  "age": 33,
+  "segment": "Iniciante com banca pequena",
+  "income": 29000,
+  "behaviour": "Caçador de promoção",
+  "behaviour_how": "Espera cupom, teste grátis ou desconto de lançamento.",
+  "objection": "Não sei se é legal ou seguro operar isso",
+  "habit": "você já assistiu vídeos de gurus de trading no TikTok"
+ },
+ {
+  "id": "P002",
+  "name": "Cole",
+  "age": 26,
+  "segment": "Trader com banca maior",
+  "income": 218000,
+  "behaviour": "Caçador de sinais",
+  "behaviour_how": "Assina grupos de sinais e troca quando um deixa de dar resultado.",
+  "objection": "49% de acerto é abaixo do equilíbrio, então perco dinheiro",
+  "habit": "você já assistiu vídeos de gurus de trading no TikTok"
+ },
+ {
+  "id": "P003",
+  "name": "Kenji",
+  "age": 39,
+  "segment": "Trader intermediário que já perdeu dinheiro",
+  "income": 98000,
+  "behaviour": "Já foi enganado",
+  "behaviour_how": "Perdeu dinheiro com infoprodutos de trading e desconfia de tudo.",
+  "objection": "49% de acerto é abaixo do equilíbrio, então perco dinheiro",
+  "habit": "você acompanha operações em grupos de Telegram"
+ },
+ {
+  "id": "P004",
+  "name": "Selin",
+  "age": 41,
+  "segment": "Trader com banca maior",
+  "income": 139000,
+  "behaviour": "Caçador de sinais",
+  "behaviour_how": "Assina grupos de sinais e troca quando um deixa de dar resultado.",
+  "objection": "Não sei se é legal ou seguro operar isso",
+  "habit": "você já assistiu vídeos de gurus de trading no TikTok"
+ },
+ {
+  "id": "P005",
+  "name": "Omar",
+  "age": 30,
+  "segment": "Iniciante com banca pequena",
+  "income": 39000,
+  "behaviour": "Gestor de banca disciplinado",
+  "behaviour_how": "Usa planilhas e stops, valoriza ferramenta de controle.",
+  "objection": "49% de acerto é abaixo do equilíbrio, então perco dinheiro",
+  "habit": "você acompanha operações em grupos de Telegram"
+ },
+ {
+  "id": "P006",
+  "name": "Elle",
+  "age": 23,
+  "segment": "Trader intermediário que já perdeu dinheiro",
+  "income": 114000,
+  "behaviour": "Caçador de sinais",
+  "behaviour_how": "Assina grupos de sinais e troca quando um deixa de dar resultado.",
+  "objection": "Não sei se é legal ou seguro operar isso",
+  "habit": "você já assistiu vídeos de gurus de trading no TikTok"
+ },
+ {
+  "id": "P007",
+  "name": "Felix",
+  "age": 27,
+  "segment": "Iniciante com banca pequena",
+  "income": 56000,
+  "behaviour": "Já foi enganado",
+  "behaviour_how": "Perdeu dinheiro com infoprodutos de trading e desconfia de tudo.",
+  "objection": "Não sei se é legal ou seguro operar isso",
+  "habit": "você anota seus resultados numa planilha de banca"
+ },
+ {
+  "id": "P008",
+  "name": "Zoe",
+  "age": 37,
+  "segment": "Trader com banca maior",
+  "income": 226000,
+  "behaviour": "Busca renda rápida",
+  "behaviour_how": "Quer lucro logo e compra a promessa que parecer mais fácil.",
+  "objection": "Todo sinal pago promete lucro e ninguém mostra prova",
+  "habit": "você anota seus resultados numa planilha de banca"
+ },
+ {
+  "id": "P009",
+  "name": "Andre",
+  "age": 24,
+  "segment": "Iniciante com banca pequena",
+  "income": 29000,
+  "behaviour": "Cético que quer prova",
+  "behaviour_how": "Só paga vendo histórico auditável e prints de resultado.",
+  "objection": "49% de acerto é abaixo do equilíbrio, então perco dinheiro",
+  "habit": "você anota seus resultados numa planilha de banca"
+ },
+ {
+  "id": "P010",
+  "name": "Bilal",
+  "age": 25,
+  "segment": "Trader intermediário que já perdeu dinheiro",
+  "income": 103000,
+  "behaviour": "Já foi enganado",
+  "behaviour_how": "Perdeu dinheiro com infoprodutos de trading e desconfia de tudo.",
+  "objection": "Posso perder minha banca seguindo o sinal",
+  "habit": "você anota seus resultados numa planilha de banca"
+ },
+ {
+  "id": "P011",
+  "name": "Oscar",
+  "age": 24,
+  "segment": "Iniciante com banca pequena",
+  "income": 37000,
+  "behaviour": "Caçador de promoção",
+  "behaviour_how": "Espera cupom, teste grátis ou desconto de lançamento.",
+  "objection": "Não sei se é legal ou seguro operar isso",
+  "habit": "você acompanha operações em grupos de Telegram"
+ },
+ {
+  "id": "P012",
+  "name": "Alma",
+  "age": 37,
+  "segment": "Iniciante com banca pequena",
+  "income": 52000,
+  "behaviour": "Cético que quer prova",
+  "behaviour_how": "Só paga vendo histórico auditável e prints de resultado.",
+  "objection": "Todo sinal pago promete lucro e ninguém mostra prova",
+  "habit": "você anota seus resultados numa planilha de banca"
+ },
+ {
+  "id": "P013",
+  "name": "Victor",
+  "age": 33,
+  "segment": "Trader intermediário que já perdeu dinheiro",
+  "income": 61000,
+  "behaviour": "Busca renda rápida",
+  "behaviour_how": "Quer lucro logo e compra a promessa que parecer mais fácil.",
+  "objection": "Todo sinal pago promete lucro e ninguém mostra prova",
+  "habit": "você opera entre 10h e 15h e depois à noite"
+ },
+ {
+  "id": "P014",
+  "name": "Jasper",
+  "age": 31,
+  "segment": "Trader intermediário que já perdeu dinheiro",
+  "income": 69000,
+  "behaviour": "Busca renda rápida",
+  "behaviour_how": "Quer lucro logo e compra a promessa que parecer mais fácil.",
+  "objection": "Não sei se é legal ou seguro operar isso",
+  "habit": "você já assistiu vídeos de gurus de trading no TikTok"
+ },
+ {
+  "id": "P015",
+  "name": "Adrian",
+  "age": 20,
+  "segment": "Iniciante com banca pequena",
+  "income": 45000,
+  "behaviour": "Busca renda rápida",
+  "behaviour_how": "Quer lucro logo e compra a promessa que parecer mais fácil.",
+  "objection": "49% de acerto é abaixo do equilíbrio, então perco dinheiro",
+  "habit": "você já assistiu vídeos de gurus de trading no TikTok"
+ },
+ {
+  "id": "P016",
+  "name": "Pablo",
+  "age": 26,
+  "segment": "Trader intermediário que já perdeu dinheiro",
+  "income": 74000,
+  "behaviour": "Cético que quer prova",
+  "behaviour_how": "Só paga vendo histórico auditável e prints de resultado.",
+  "objection": "Por que eu pagaria por algo que o próprio criador ainda está validando",
+  "habit": "você acompanha operações em grupos de Telegram"
+ },
+ {
+  "id": "P017",
+  "name": "Gabriel",
+  "age": 33,
+  "segment": "Iniciante com banca pequena",
+  "income": 40000,
+  "behaviour": "Caçador de sinais",
+  "behaviour_how": "Assina grupos de sinais e troca quando um deixa de dar resultado.",
+  "objection": "49% de acerto é abaixo do equilíbrio, então perco dinheiro",
+  "habit": "você opera entre 10h e 15h e depois à noite"
+ },
+ {
+  "id": "P018",
+  "name": "Mei",
+  "age": 44,
+  "segment": "Trader intermediário que já perdeu dinheiro",
+  "income": 100000,
+  "behaviour": "Cético que quer prova",
+  "behaviour_how": "Só paga vendo histórico auditável e prints de resultado.",
+  "objection": "Posso perder minha banca seguindo o sinal",
+  "habit": "você opera entre 10h e 15h e depois à noite"
+ },
+ {
+  "id": "P019",
+  "name": "Ethan",
+  "age": 28,
+  "segment": "Trader intermediário que já perdeu dinheiro",
+  "income": 88000,
+  "behaviour": "Gestor de banca disciplinado",
+  "behaviour_how": "Usa planilhas e stops, valoriza ferramenta de controle.",
+  "objection": "49% de acerto é abaixo do equilíbrio, então perco dinheiro",
+  "habit": "você já assistiu vídeos de gurus de trading no TikTok"
+ },
+ {
+  "id": "P020",
+  "name": "Yara",
+  "age": 22,
+  "segment": "Iniciante com banca pequena",
+  "income": 52000,
+  "behaviour": "Caçador de promoção",
+  "behaviour_how": "Espera cupom, teste grátis ou desconto de lançamento.",
+  "objection": "O sinal chega tarde ou a corretora muda o preço",
+  "habit": "você acompanha operações em grupos de Telegram"
+ }
+]

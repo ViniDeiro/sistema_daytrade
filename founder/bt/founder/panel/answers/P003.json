@@ -1,0 +1,13 @@
+{
+  "id": "P003",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Já fui enganado por infoproduto de trading e backtest não me convence. Margem de 54% contra 51% de equilíbrio some com atraso, slippage e a vela fechando antes de eu entrar.",
+  "objection": "É só backtest, não resultado ao vivo. 7 segundos antes do fechamento no Telegram, com o atraso da corretora, o 54% vira menos de 51% e eu perco dinheiro pagando assinatura ainda por cima.",
+  "would_change_my_mind": "Um histórico ao vivo auditado por terceiros, com horário dos sinais registrado antes do fechamento de cada vela, ao longo de pelo menos alguns meses, e teste grátis ou reembolso.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 50,
+  "price_too_expensive": 120
+}

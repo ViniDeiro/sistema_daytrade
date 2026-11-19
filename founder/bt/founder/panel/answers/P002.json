@@ -1,0 +1,13 @@
+{
+  "id": "P002",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Já vi muito guru e grupo de sinal com backtest bonito que não aguenta ao vivo. Backtest não é dinheiro na conta, e 54% em cima de 51% de equilíbrio é uma margem fina que some com atraso de entrada ou spread.",
+  "objection": "É só simulação. Entrar 7 segundos antes do fechamento no Telegram, com atraso e slippage, pode comer toda essa margem, e eu não tenho prova de resultado ao vivo.",
+  "would_change_my_mind": "Resultado ao vivo verificável por algumas semanas, com horário de cada sinal, ou um teste grátis/garantia de reembolso para eu medir sozinho.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 60,
+  "price_too_expensive": 150
+}

@@ -1,0 +1,10 @@
+# reinstalado no PC novo com npm install
+node_modules/
+# sessão logada da Ebinex: NUNCA sobe (faz login de novo com node login.mjs)
+profile/
+profile_conta_principal/
+# token do Telegram: levar separado
+.env
+# logs
+*.log
+.DS_Store

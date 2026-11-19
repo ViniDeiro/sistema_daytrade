@@ -1,0 +1,13 @@
+{
+  "id": "P009",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "49,5% de acerto com payout de 96% fica abaixo do equilíbrio de 51,02%, então seguindo o sinal eu perco dinheiro. Pagar mensalidade por uma estratégia que ainda perde na própria medição não faz sentido com a minha banca pequena.",
+  "objection": "Os números deles mesmos mostram que a regra perde dinheiro (1.853 entradas, 49,5%). O filtro forte tem só 16 entradas, isso não prova nada.",
+  "would_change_my_mind": "Ver pelo registro público um filtro com centenas de entradas ao vivo, acima de 51,02% de forma consistente por semanas, e só então testar com preço baixo e cancelamento fácil.",
+  "price_too_cheap": 9,
+  "price_cheap": 19,
+  "price_expensive": 59,
+  "price_too_expensive": 99
+}

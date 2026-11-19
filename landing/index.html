@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Placar Aberto · alertas de sinal com placar público</title>
+<meta name="description" content="Alertas de sinal para IDX/USDT e MEMX/USDT em M1, com regra fixa e placar público de todas as entradas, inclusive das perdas. Entre na lista de acesso antecipado.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ===== CONFIGURAÇÃO: onde os cadastros chegam =====
+   Cole aqui o endereço do seu formulário (ex.: Formspree "https://formspree.io/f/xxxx", ou um Google Apps Script).
+   Enquanto estiver vazio, o botão avisa que o formulário ainda não está conectado (nenhum cadastro se perde em silêncio). */
+</style>
+<script>window.LEAD_ENDPOINT = "";</script>
+<style>
+/* Layout: uma coluna editorial, hero com a "fita" de velas como prova visual da regra; uma única ação repetida (entrar na lista). */
+:root{
+  --bg:#f2f4f7; --surface:#ffffff; --ink:#0f1b2d; --mut:#5a6578; --line:#dde2ea;
+  --accent:#2346d6; --accent-ink:#ffffff; --up:#13805c; --down:#c2362f; --soft:#e8edfb;
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1320; --surface:#131c2c; --ink:#e9eef6; --mut:#97a3b6; --line:#243048;
+  --accent:#6f8cff; --accent-ink:#0c1320; --up:#3cc48f; --down:#ff6b61; --soft:#18233a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1320; --surface:#131c2c; --ink:#e9eef6; --mut:#97a3b6; --line:#243048;
+  --accent:#6f8cff; --accent-ink:#0c1320; --up:#3cc48f; --down:#ff6b61; --soft:#18233a; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin-inline:auto;padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.05;letter-spacing:-.02em;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+.eyebrow{font:500 12.5px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--mut)}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 17px/1 var(--body);background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:18px 28px;cursor:pointer;text-decoration:none;transition:transform .15s ease, box-shadow .15s ease;box-shadow:0 8px 24px -10px var(--accent)}
+.btn:hover{transform:translateY(-1px)}
+.btn:focus-visible, input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.micro{font-size:14px;color:var(--mut)}
+
+/* topo */
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:20px}
+.logo{font:800 20px/1 var(--display);letter-spacing:-.02em;display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+.logo i{display:inline-flex;gap:3px;align-items:flex-end}
+.logo i b{width:5px;border-radius:1px;background:var(--up)}
+.logo i b:nth-child(1){height:10px}.logo i b:nth-child(2){height:14px}.logo i b:nth-child(3){height:18px}.logo i b:nth-child(4){height:22px;background:var(--accent)}
+.top a.lnk{font-weight:600;text-decoration:none;font-size:15px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding-block:40px 72px}
+.hero h1{font-size:clamp(40px, 6.2vw, 72px);font-weight:800;margin:18px 0 22px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lead{font-size:clamp(18px, 2vw, 21px);color:var(--mut);max-width:34ch;margin-bottom:30px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center}
+.checks{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;padding:0;list-style:none;font-size:14.5px;color:var(--mut)}
+.checks li::before{content:"✓";color:var(--up);font-weight:700;margin-right:6px}
+
+/* fita de velas */
+.tape{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 30px 60px -40px rgba(15,27,45,.45);min-width:0}
+.tape-h{display:flex;justify-content:space-between;align-items:center;font:500 12.5px var(--mono);color:var(--mut);margin-bottom:14px}
+.live{display:inline-flex;align-items:center;gap:6px}.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--up);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.chart{display:flex;align-items:flex-end;gap:7px;height:190px;padding:10px 4px;border-bottom:1px dashed var(--line);position:relative}
+.c{flex:1;position:relative;display:flex;justify-content:center}
+.c .wick{position:absolute;width:2px;background:currentColor;opacity:.7}
+.c .body{position:relative;width:100%;max-width:22px;border-radius:3px;background:currentColor}
+.c.g{color:var(--up)}.c.r{color:var(--down)}
+.c.next .body{background:transparent;border:2px dashed var(--accent)}.c.next{color:var(--accent)}
+.c.run::after{content:attr(data-n);position:absolute;bottom:-26px;font:500 11px var(--mono);color:var(--up)}
+.c.next::after{content:"?";position:absolute;bottom:-26px;font:600 12px var(--mono);color:var(--accent)}
+.alert{margin-top:38px;border-radius:14px;background:var(--soft);padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center}
+.alert .ic{grid-row:span 2;width:38px;height:38px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:700 18px var(--display)}
+.alert b{font-family:var(--display);font-size:18px}
+.alert span{font:400 13px var(--mono);color:var(--mut)}
+
+/* seções */
+section{padding-block:72px}
+.sec-h{max-width:40ch;margin-bottom:40px}
+.sec-h h2{font-size:clamp(30px, 4vw, 46px);font-weight:700;margin-top:12px}
+.sec-h p{color:var(--mut);margin-top:14px;font-size:18px}
+.band{background:var(--surface);border-block:1px solid var(--line)}
+
+.pain{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:28px}
+.pain div{border-top:2px solid var(--ink);padding-top:18px}
+.pain h3{font-size:22px;margin-bottom:8px}
+.pain p{color:var(--mut)}
+
+.steps{display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:20px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;background:var(--bg);border-radius:16px;padding:22px}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font:600 15px var(--mono);margin-bottom:16px}
+.steps h3{font-size:20px;margin-bottom:8px}
+.steps p{color:var(--mut);font-size:15.5px}
+.steps code{font:500 14px var(--mono);color:var(--ink);background:var(--soft);padding:1px 6px;border-radius:5px}
+
+/* placar */
+.board{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.ledger{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-width:0}
+.ledger-h{display:flex;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);font:500 12.5px var(--mono);color:var(--mut)}
+.ledger table{width:100%;border-collapse:collapse;font:400 14.5px var(--mono);font-variant-numeric:tabular-nums}
+.ledger td{padding:11px 18px;border-bottom:1px solid var(--line)}
+.ledger tr:last-child td{border-bottom:0}
+.ledger td:last-child{text-align:right;font-weight:500}
+.w{color:var(--up)}.l{color:var(--down)}
+.tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;border:1px solid currentColor;margin-left:6px}
+.ex{font:500 11px var(--mono);color:var(--mut);padding:10px 18px;border-top:1px solid var(--line);background:var(--bg)}
+.promise{display:grid;gap:14px;margin-top:26px;padding:0;list-style:none}
+.promise li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.promise li::before{content:"✓";font-weight:700;color:var(--up)}
+.promise li.no::before{content:"✕";color:var(--down)}
+
+/* formulário */
+.join{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+.join h2{font-size:clamp(34px, 4.6vw, 54px);font-weight:800}
+.join .lead{color:var(--mut);margin-top:16px;font-size:18px}
+.spots{margin-top:28px;font:500 14px var(--mono);color:var(--mut)}
+form{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px;display:grid;gap:18px;box-shadow:0 30px 60px -45px rgba(15,27,45,.5)}
+label{display:grid;gap:7px;font-weight:600;font-size:15px}
+label small{font-weight:400;color:var(--mut)}
+input,select{font:400 16px var(--body);color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:14px;width:100%}
+input:focus,select:focus{border-color:var(--accent)}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+legend{font-weight:600;font-size:15px;margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts input{position:absolute;opacity:0;width:1px;height:1px}
+.opts label{font-weight:500;font-size:14.5px;border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;cursor:pointer;background:var(--bg)}
+.opts input:checked + label{border-color:var(--accent);background:var(--soft);color:var(--accent)}
+.opts input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+form .btn{justify-content:center;width:100%}
+.msg{font-size:14.5px;border-radius:12px;padding:12px 14px}
+.msg.ok{background:color-mix(in srgb, var(--up) 14%, transparent);color:var(--up)}
+.msg.err{background:color-mix(in srgb, var(--down) 12%, transparent);color:var(--down)}
+
+/* faq */
+.faq{max-width:760px}
+details{border-bottom:1px solid var(--line);padding-block:20px}
+summary{cursor:pointer;font:700 20px/1.3 var(--display);list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--mono);color:var(--accent);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--mut);margin-top:12px;max-width:62ch}
+
+footer{padding-block:48px 64px;border-top:1px solid var(--line);color:var(--mut);font-size:13.5px}
+footer p+p{margin-top:10px}
+
+/* barra fixa no celular */
+.sticky{position:fixed;left:0;right:0;bottom:0;padding:12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:none;z-index:20}
+.sticky .btn{width:100%;justify-content:center;padding:16px}
+
+@media (max-width: 880px){
+  .hero,.board,.join{grid-template-columns:1fr;gap:36px}
+  .steps{grid-template-columns:1fr 1fr}
+  .pain{grid-template-columns:1fr}
+  section{padding-block:56px}
+  .sticky.show{display:block}
+  body{padding-bottom:84px}
+}
+@media (max-width: 520px){.steps{grid-template-columns:1fr}.top a.lnk{display:none}form{padding:20px}}
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="logo" href="#"><i><b></b><b></b><b></b><b></b></i>Placar Aberto</a>
+  <a class="lnk" href="#entrar">Entrar na lista →</a>
+</header>
+
+<main>
+<section class="wrap hero" style="padding-top:24px">
+  <div>
+    <p class="eyebrow">Alertas de sinal · IDX/USDT e MEMX/USDT · velas de 1 minuto</p>
+    <h1>O sinal só chega quando o gráfico mostra <em>força</em>. E o placar mostra tudo, inclusive as perdas.</h1>
+    <p class="lead">Um robô lê as velas o dia inteiro e te avisa no Telegram quando a regra aparece. Você decide se entra. Cada alerta vai para um placar público que ninguém edita.</p>
+    <div class="cta">
+      <a class="btn" href="#entrar">Quero acesso antecipado <span aria-hidden="true">→</span></a>
+      <span class="micro">Grátis nesta fase · leva 30 segundos</span>
+    </div>
+    <ul class="checks"><li>Regra fixa, sem achismo</li><li>Nunca pedimos sua senha</li><li>Sem promessa de lucro</li></ul>
+  </div>
+
+  <div class="tape" aria-label="Exemplo ilustrativo de um alerta: quatro velas verdes seguidas com força alta, alerta para entrar a favor na vela seguinte">
+    <div class="tape-h"><span class="live">IDX/USDT · M1</span><span>exemplo ilustrativo</span></div>
+    <div class="chart" id="chart"></div>
+    <div class="alert">
+      <div class="ic" aria-hidden="true">▲</div>
+      <b>Compra na próxima vela</b>
+      <span>4ª verde seguida · força 5,6× o normal</span>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="sec-h"><p class="eyebrow">O problema</p><h2>Grupo de sinal mostra o print do acerto e some no erro.</h2></div>
+    <div class="pain">
+      <div><h3>Resultado escolhido a dedo</h3><p>Você vê os acertos. As perdas nunca aparecem, então não dá para saber se aquilo funciona.</p></div>
+      <div><h3>Regra que ninguém explica</h3><p>"Confia que é bom." Sem saber o critério, você não sabe quando o sinal está fora do padrão.</p></div>
+      <div><h3>Sinal atrasado</h3><p>A mensagem chega com a vela já andando e você entra em preço pior do que quem mandou.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="como">
+  <div class="sec-h"><p class="eyebrow">Como funciona</p><h2>A mesma regra, todo minuto, para todo mundo.</h2><p>Nada de opinião. O robô aplica um critério escrito e público. Se a regra não aparece, ele fica quieto.</p></div>
+  <ol class="steps">
+    <li><h3>Lê as velas</h3><p>Acompanha IDX/USDT e MEMX/USDT em M1, das 8h às 22h.</p></li>
+    <li><h3>Procura a sequência</h3><p><code>4+</code> velas da mesma cor seguidas, com movimento de pelo menos <code>4,9×</code> a média recente (ATR de 14 velas).</p></li>
+    <li><h3>Te avisa antes</h3><p>Alerta no Telegram segundos antes da vela fechar, com a direção. Você opera na sua conta, se quiser.</p></li>
+    <li><h3>Registra no placar</h3><p>Acerto, erro ou empate. Tudo vai para o placar público, sem apagar nada.</p></li>
+  </ol>
+</section>
+
+<section class="band">
+  <div class="wrap board">
+    <div class="ledger" aria-label="Exemplo de como o placar aparece">
+      <div class="ledger-h"><span>Placar · hoje</span><span>valor base $20</span></div>
+      <table>
+        <tr><td>09:01</td><td>MEMX ▼</td><td class="l">perdeu</td><td class="l">−$20,00</td></tr>
+        <tr><td>14:00</td><td>MEMX ▲</td><td class="w">ganhou</td><td class="w">+$19,20</td></tr>
+        <tr><td>14:37</td><td>IDX ▼</td><td class="w">ganhou</td><td class="w">+$19,20</td></tr>
+        <tr><td>14:39</td><td>IDX ▼</td><td class="l">perdeu</td><td class="l">−$20,00</td></tr>
+        <tr><td>16:11</td><td>IDX ▲</td><td class="l">perdeu <span class="tag">alerta enviado</span></td><td class="l">−$20,00</td></tr>
+      </table>
+      <div class="ex">Exemplo de layout. O placar real fica público para quem estiver na lista.</div>
+    </div>
+    <div>
+      <p class="eyebrow">Transparência</p>
+      <h2 style="font-size:clamp(30px,4vw,46px);margin-top:12px">Você vê o vermelho também.</h2>
+      <ul class="promise">
+        <li>Placar público com todas as entradas, dia a dia, sem filtro.</li>
+        <li>Critério escrito. Você pode conferir cada sinal no gráfico.</li>
+        <li>Relatório diário com acerto, perdas e resultado.</li>
+        <li class="no">Não operamos por você e não pedimos login nem senha da corretora.</li>
+        <li class="no">Não prometemos lucro. Opção binária é de alto risco e pode dar prejuízo.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="entrar">
+  <div class="join">
+    <div>
+      <p class="eyebrow">Acesso antecipado</p>
+      <h2>Acompanhe os sinais antes de abrir para todo mundo.</h2>
+      <p class="lead">Estamos testando o sistema ao vivo. Quem entra agora recebe os alertas e o placar de graça nesta fase e ajuda a decidir o que vem depois.</p>
+      <p class="spots">Primeira turma: 100 vagas.</p>
+    </div>
+    <form id="lead" novalidate>
+      <label for="nome">Seu nome<input id="nome" name="nome" autocomplete="given-name" required placeholder="Como você quer ser chamado"></label>
+      <label for="whats">WhatsApp <small>(é por onde mandamos o convite do grupo)</small><input id="whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(11) 91234-5678"></label>
+      <fieldset>
+        <legend>Você já opera opções binárias?</legend>
+        <div class="opts">
+          <input type="radio" name="experiencia" id="e1" value="todo dia" required><label for="e1">Quase todo dia</label>
+          <input type="radio" name="experiencia" id="e2" value="as vezes"><label for="e2">De vez em quando</label>
+          <input type="radio" name="experiencia" id="e3" value="comecando"><label for="e3">Estou começando</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Quanto pagaria por mês por isso, se funcionar para você?</legend>
+        <div class="opts">
+          <input type="radio" name="preco" id="p0" value="0" required><label for="p0">Só de graça</label>
+          <input type="radio" name="preco" id="p1" value="ate 49"><label for="p1">Até R$ 49</label>
+          <input type="radio" name="preco" id="p2" value="50-99"><label for="p2">R$ 50 a 99</label>
+          <input type="radio" name="preco" id="p3" value="100+"><label for="p3">R$ 100 ou mais</label>
+        </div>
+      </fieldset>
+      <input type="hidden" name="origem" id="origem">
+      <button class="btn" type="submit" id="enviar">Garantir minha vaga <span aria-hidden="true">→</span></button>
+      <div id="msg" class="msg" hidden role="status"></div>
+      <p class="micro">Sem spam. Seu número só é usado para o convite e avisos do teste.</p>
+    </form>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap faq">
+    <div class="sec-h"><p class="eyebrow">Perguntas</p><h2>Antes de entrar</h2></div>
+    <details><summary>Isso garante lucro?</summary><p>Não. Nenhum sinal garante. O sistema aplica uma regra e mostra o resultado real de cada entrada, inclusive as perdas, para você decidir com base em dados e não em print.</p></details>
+    <details><summary>Preciso passar minha senha ou deixar o robô operar?</summary><p>Nunca. Você recebe o alerta e opera na sua própria conta, se quiser. Não pedimos login, senha nem acesso à corretora.</p></details>
+    <details><summary>Em qual corretora funciona?</summary><p>Os sinais são calculados nos gráficos IDX/USDT e MEMX/USDT da Ebinex, em velas de 1 minuto. Em outra corretora o preço é diferente e o sinal pode não valer.</p></details>
+    <details><summary>Quanto custa?</summary><p>Nesta fase de teste é gratuito. A pergunta do formulário sobre preço serve para a gente decidir se e como vai cobrar depois.</p></details>
+    <details><summary>Por que só alguns sinais por dia?</summary><p>O robô só avisa quando a sequência tem força bem acima do normal. Em dia parado, pode passar horas sem alerta. Isso é proposital.</p></details>
+  </div>
+</section>
+</main>
+
+<footer class="wrap">
+  <p><b>Aviso de risco.</b> Opções binárias são produtos de alto risco e você pode perder todo o valor investido. Resultados passados não garantem resultados futuros. Nada nesta página é recomendação de investimento.</p>
+  <p>Placar Aberto é uma ferramenta de alertas em fase de teste. Não somos corretora e não fazemos operações em nome de ninguém.</p>
+</footer>
+
+<div class="sticky" id="sticky"><a class="btn" href="#entrar">Quero acesso antecipado →</a></div>
+
+<script>
+// fita de velas ilustrativa: lateral, 4 verdes crescendo, vela seguinte em aberto
+(() => {
+  const V = [['r',30,44],['g',26,40],['r',22,38],['g',18,30],['r',24,36],['g',34,46,1],['g',48,62,2],['g',66,80,3],['g',92,106,4],['n',40,40]];
+  const el = document.getElementById('chart'); let base = 18;
+  el.innerHTML = V.map(([k, b, w, n]) => { const cls = k === 'n' ? 'next' : k + (n ? ' run' : '');
+    return `<div class="c ${cls}" ${n ? `data-n="${n}ª"` : ''}><span class="wick" style="height:${w}px;bottom:${base - 4}px"></span><span class="body" style="height:${b}px;margin-bottom:${base}px"></span></div>`; }).join('');
+})();
+
+// origem do clique (utm) para saber qual anúncio converte
+(() => { try { const q = new URLSearchParams(location.search); document.getElementById('origem').value = ['utm_source','utm_medium','utm_campaign','utm_content'].map(k => q.get(k) ? k + '=' + q.get(k) : '').filter(Boolean).join('&') || document.referrer || 'direto'; } catch {} })();
+
+// barra fixa no celular: aparece depois do topo e some quando o formulário está na tela
+(() => { const s = document.getElementById('sticky'), f = document.getElementById('entrar');
+  const upd = () => { const r = f.getBoundingClientRect(); s.classList.toggle('show', scrollY > 500 && !(r.top < innerHeight && r.bottom > 0)); };
+  addEventListener('scroll', upd, { passive: true }); upd(); })();
+
+// envio
+document.getElementById('lead').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target, msg = document.getElementById('msg'), bt = document.getElementById('enviar');
+  const show = (t, ok) => { msg.hidden = false; msg.className = 'msg ' + (ok ? 'ok' : 'err'); msg.textContent = t; };
+  const tel = f.whatsapp.value.replace(/\D/g, '');
+  if (!f.nome.value.trim()) return show('Escreva seu nome.', false), f.nome.focus();
+  if (tel.length < 10 || tel.length > 13) return show('Confira o WhatsApp: use DDD + número, como (11) 91234-5678.', false), f.whatsapp.focus();
+  if (!f.experiencia.value) return show('Marque se você já opera.', false);
+  if (!f.preco.value) return show('Marque quanto pagaria por mês.', false);
+  if (!window.LEAD_ENDPOINT) return show('O formulário ainda não está conectado. Cole o endereço do formulário em LEAD_ENDPOINT, no topo do arquivo.', false);
+  bt.disabled = true; bt.textContent = 'Enviando…';
+  try {
+    const r = await fetch(window.LEAD_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(f) });
+    if (!r.ok) throw new Error(r.status);
+    f.reset(); show('Pronto, sua vaga está garantida. Vamos te chamar no WhatsApp com o convite.', true);
+    try { window.fbq?.('track', 'Lead'); window.gtag?.('event', 'generate_lead'); } catch {}
+  } catch { show('Não conseguimos enviar agora. Confira sua internet e tente de novo.', false); }
+  bt.disabled = false; bt.innerHTML = 'Garantir minha vaga <span aria-hidden="true">→</span>';
+});
+</script>
+</body>
+</html>

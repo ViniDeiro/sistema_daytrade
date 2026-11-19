@@ -1,0 +1,86 @@
+{
+ "n": 20,
+ "seed": 336755,
+ "customer": {
+  "business": "Sinais IDX (estudo acadêmico): serviço de alertas de sinais para opções binárias, com painel de gestão de banca",
+  "target": "Traders de varejo brasileiros de opções binárias/day trade, 20 a 45 anos, que operam velas de 1 minuto em corretoras online",
+  "where": "Brasil, online (Telegram e Instagram/TikTok)",
+  "age": [
+   20,
+   45
+  ],
+  "segments": [
+   {
+    "name": "Iniciante com banca pequena",
+    "share": 0.45,
+    "income": [
+     24000,
+     60000
+    ]
+   },
+   {
+    "name": "Trader intermediário que já perdeu dinheiro",
+    "share": 0.4,
+    "income": [
+     60000,
+     120000
+    ]
+   },
+   {
+    "name": "Trader com banca maior",
+    "share": 0.15,
+    "income": [
+     120000,
+     250000
+    ]
+   }
+  ],
+  "behaviours": [
+   {
+    "name": "Caçador de sinais",
+    "share": 0.22,
+    "how": "Assina grupos de sinais e troca quando um deixa de dar resultado."
+   },
+   {
+    "name": "Cético que quer prova",
+    "share": 0.18,
+    "how": "Só paga vendo histórico auditável e prints de resultado."
+   },
+   {
+    "name": "Busca renda rápida",
+    "share": 0.18,
+    "how": "Quer lucro logo e compra a promessa que parecer mais fácil."
+   },
+   {
+    "name": "Gestor de banca disciplinado",
+    "share": 0.12,
+    "how": "Usa planilhas e stops, valoriza ferramenta de controle."
+   },
+   {
+    "name": "Já foi enganado",
+    "share": 0.15,
+    "how": "Perdeu dinheiro com infoprodutos de trading e desconfia de tudo."
+   },
+   {
+    "name": "Caçador de promoção",
+    "share": 0.15,
+    "how": "Espera cupom, teste grátis ou desconto de lançamento."
+   }
+  ],
+  "objections": [
+   "Todo sinal pago promete lucro e ninguém mostra prova",
+   "49% de acerto é abaixo do equilíbrio, então perco dinheiro",
+   "Por que eu pagaria por algo que o próprio criador ainda está validando",
+   "O sinal chega tarde ou a corretora muda o preço",
+   "Posso perder minha banca seguindo o sinal",
+   "Não sei se é legal ou seguro operar isso"
+  ],
+  "habits": [
+   "você acompanha operações em grupos de Telegram",
+   "você anota seus resultados numa planilha de banca",
+   "você já assistiu vídeos de gurus de trading no TikTok",
+   "você opera entre 10h e 15h e depois à noite"
+  ]
+ },
+ "pitch": "Sinais IDX: alertas por Telegram, cerca de 7 segundos antes do fechamento de cada vela de 1 minuto, para a regra \"sequência de 4 ou mais velas iguais, a próxima repete\". Inclui painel de gestão de banca (operações, aportes, projeção, impostos).\nBacktest de 2 anos (out/2024 a out/2026), entrada de $40, payout de 96%: ano 1, 43.511 entradas, 54,71% de acerto, 13 de 13 meses positivos, +$126.029; ano 2, 41.772 entradas, 53,82% de acerto, 12 de 13 meses positivos, +$91.630. Equilíbrio: 51,02%.\nIsto é backtest (resultado passado, simulado), não resultado ao vivo, e não garante lucro futuro.\nPreço da assinatura mensal: a definir (você responde as perguntas de preço)."
+}

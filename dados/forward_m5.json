@@ -1,0 +1,38 @@
+{
+ "trades": [
+  {
+   "id": 1794156600000,
+   "sigT": 1794156600000,
+   "entryT": 1794156900000,
+   "sigAt": 1794156840993,
+   "dir": "R",
+   "run": 2,
+   "forca": 8.23,
+   "stake": 20,
+   "status": "fechado",
+   "entryPrice": 3479.05,
+   "exitPrice": 3478.68,
+   "empate": false,
+   "win": true,
+   "pnl": 19.2,
+   "closedAt": 1794157599390
+  },
+  {
+   "id": 1794581700000,
+   "sigT": 1794581700000,
+   "entryT": 1794582000000,
+   "sigAt": 1794581940602,
+   "dir": "R",
+   "run": 16,
+   "forca": 8.48,
+   "stake": 20,
+   "status": "fechado",
+   "entryPrice": 3221.94,
+   "exitPrice": 3194.45,
+   "empate": false,
+   "win": true,
+   "pnl": 19.2,
+   "closedAt": 1794582306220
+  }
+ ]
+}

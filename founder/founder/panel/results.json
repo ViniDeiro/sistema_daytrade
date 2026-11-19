@@ -1,0 +1,127 @@
+{
+ "business": "Sinais IDX (estudo acadêmico): serviço de alertas de sinais para opções binárias, com painel de gestão de banca",
+ "seed": 336755,
+ "dealt": 20,
+ "answered": 20,
+ "skipped": [],
+ "buys": 0,
+ "passes": 20,
+ "buy_rate": 0.0,
+ "by_segment": [
+  [
+   "Iniciante com banca pequena",
+   9,
+   0.0
+  ],
+  [
+   "Trader com banca maior",
+   3,
+   0.0
+  ],
+  [
+   "Trader intermediário que já perdeu dinheiro",
+   8,
+   0.0
+  ]
+ ],
+ "by_behaviour": [
+  [
+   "Caçador de promoção",
+   3,
+   0.0
+  ],
+  [
+   "Caçador de sinais",
+   4,
+   0.0
+  ],
+  [
+   "Já foi enganado",
+   3,
+   0.0
+  ],
+  [
+   "Gestor de banca disciplinado",
+   2,
+   0.0
+  ],
+  [
+   "Busca renda rápida",
+   4,
+   0.0
+  ],
+  [
+   "Cético que quer prova",
+   4,
+   0.0
+  ]
+ ],
+ "by_income": [
+  [
+   "under $52,000",
+   6,
+   0.0
+  ],
+  [
+   "$98,000 and up",
+   7,
+   0.0
+  ],
+  [
+   "$52,000 to $98,000",
+   7,
+   0.0
+  ]
+ ],
+ "why_not": [
+  [
+   "quality",
+   13,
+   [
+    "O próprio número de vocês diz 49,5% com equilíbrio em 51,02%, então seguir esses sinais perde dinheiro. Eu troco de grupo quando para de dar resultado, e esse já nasce sem resultado.",
+    "49,5% de acerto com payout de 96% fica abaixo do equilíbrio de 51,02%, então seguindo esses sinais eu perco dinheiro. Já paguei por infoproduto de trading antes e não vou pagar de novo por algo que o próprio resultado mostra que não passa do zero a zero."
+   ],
+   [
+    "P002",
+    "P003"
+   ]
+  ],
+  [
+   "trust",
+   7,
+   [
+    "Eles mesmos dizem que o acerto é 49,5% e o equilíbrio é 51,02%, ou seja, no papel já perde dinheiro. Com banca pequena eu não vou pagar assinatura por sinal que não deu lucro, e ainda fico com medo de não ser seguro.",
+    "Já perdi dinheiro com infoproduto de trading e o próprio material diz que 49,5% fica abaixo do equilíbrio de 51,02%. Pagar mensalidade por sinal que ainda perde no papel não faz sentido pra mim."
+   ],
+   [
+    "P001",
+    "P007"
+   ]
+  ]
+ ],
+ "why_yes": [],
+ "flip": [
+  "Um teste grátis de 30 dias e, depois de centenas de entradas, o filtro forte acima de 53% de acerto ao vivo.",
+  "Mais de 51,02% ao vivo, de forma sustentada, em algumas centenas de entradas do filtro forte no registro público, sem eu precisar confiar na palavra de vocês.",
+  "Uns 2.000 ou mais entradas ao vivo, com o filtro de sinais fortes acima de 53% de acerto, no registro público, depois do custo, e por pelo menos 2 meses seguidos.",
+  "Ver meses de registro público com acerto acima de 51% em volume grande (não 16 entradas), e o filtro forte confirmado ao vivo.",
+  "Ver uns 2 ou 3 meses de resultado ao vivo com acerto claramente acima de 51,02% numa amostra grande, inclusive do filtro forte, no registro público.",
+  "Ver pelo menos 2 ou 3 meses de registro público com acerto claramente acima de 51% em centenas de entradas do filtro forte, e um teste grátis para eu conferir antes.",
+  "Vários meses de resultado ao vivo acima de 51,02% com milhares de entradas no filtro forte, registro público que eu possa conferir, e teste grátis sem cartão.",
+  "Ver o registro público com pelo menos algumas centenas de entradas do filtro forte acima de 53% de acerto, ao vivo, e um período de teste grátis.",
+  "Ver pelo registro público um filtro com centenas de entradas ao vivo, acima de 51,02% de forma consistente por semanas, e só então testar com preço baixo e cancelamento fácil.",
+  "Uns 3 meses de registro público ao vivo com mais de 500 entradas do filtro forte acima de 52% de acerto, depois do payout.",
+  "Um teste grátis de um mês e centenas de entradas do filtro forte ao vivo acima de 52%, com o registro público confirmando.",
+  "Ver o filtro de sinais fortes acima de 51,02% numa amostra grande (centenas de entradas) no registro público, por algumas semanas seguidas, ou então um período de teste grátis.",
+  "Ver o filtro de sinais fortes com algumas centenas de entradas ao vivo acima de 52% de acerto no registro público; aí eu testaria barato.",
+  "Ver o filtro forte com centenas de entradas ao vivo acima de 52% por algumas semanas, no registro público.",
+  "Ver centenas de entradas ao vivo, em papel, com acerto acima de 53% de forma consistente, e um teste gratis de um mes.",
+  "Ver centenas de entradas do filtro de sinais fortes, auditáveis no registro público, com acerto sustentado acima de 51,02% por vários meses. Aí eu pagaria.",
+  "Ver pelo menos alguns meses de registro público, com centenas de entradas do filtro forte, acima de 51,02% de acerto, e um teste grátis para eu conferir.",
+  "Centenas de entradas do filtro forte, ao vivo e auditável, acima de 51,02% de acerto de forma consistente, com o registro público confirmando.",
+  "Ver o filtro forte acima de 53% em pelo menos 500 entradas limpas ao vivo, com o registro público mostrando que continua acima do equilíbrio. Aí eu pagaria, ou pelo menos pagaria só pelo painel de banca.",
+  "Ver uns 2 ou 3 meses de resultado ao vivo acima de 51,02% com bastante entradas, e um teste gratis de 7 a 14 dias pra eu conferir o atraso na minha corretora."
+ ],
+ "purchases_first_month_per_buyer": null,
+ "price_answers": 20
+}

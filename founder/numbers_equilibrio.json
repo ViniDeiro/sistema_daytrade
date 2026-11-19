@@ -1,0 +1,40 @@
+{
+ "business": "Daytrader IDX acerto 51.02% (equilibrio)",
+ "unit": "entry",
+ "price": 40.0,
+ "variable": [
+  {
+   "label": "Stake em risco ($40)",
+   "cost": 40
+  }
+ ],
+ "fixed_monthly": [
+  {
+   "label": "Ferramentas (estimativa, gratis no plano atual)",
+   "cost": 0
+  }
+ ],
+ "startup": [
+  {
+   "label": "Banca de capital em risco (referencia)",
+   "cost": 2400
+  }
+ ],
+ "days_per_month": 30,
+ "capacity_per_day": 300,
+ "plan_per_day": 100,
+ "ramp_per_day": [
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100
+ ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P019",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "Os próprios números dizem que a regra perde: 49,5% em 1.853 entradas contra 51,02% de equilíbrio. Não vou pagar mensalidade por sinal que, medido ao vivo, é negativo depois do payout.",
+  "objection": "A amostra é grande o bastante (1.853 entradas) para eu acreditar que o edge não existe. O filtro forte de 54% tem só 16 entradas, isso é ruído, não prova.",
+  "would_change_my_mind": "Ver o filtro forte acima de 53% em pelo menos 500 entradas limpas ao vivo, com o registro público mostrando que continua acima do equilíbrio. Aí eu pagaria, ou pelo menos pagaria só pelo painel de banca.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 40,
+  "price_too_expensive": 80
+}

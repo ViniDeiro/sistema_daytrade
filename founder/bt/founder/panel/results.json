@@ -1,0 +1,115 @@
+{
+ "business": "Sinais IDX (estudo acadêmico): serviço de alertas de sinais para opções binárias, com painel de gestão de banca",
+ "seed": 336755,
+ "dealt": 20,
+ "answered": 20,
+ "skipped": [],
+ "buys": 0,
+ "passes": 20,
+ "buy_rate": 0.0,
+ "by_segment": [
+  [
+   "Iniciante com banca pequena",
+   9,
+   0.0
+  ],
+  [
+   "Trader com banca maior",
+   3,
+   0.0
+  ],
+  [
+   "Trader intermediário que já perdeu dinheiro",
+   8,
+   0.0
+  ]
+ ],
+ "by_behaviour": [
+  [
+   "Caçador de promoção",
+   3,
+   0.0
+  ],
+  [
+   "Caçador de sinais",
+   4,
+   0.0
+  ],
+  [
+   "Já foi enganado",
+   3,
+   0.0
+  ],
+  [
+   "Gestor de banca disciplinado",
+   2,
+   0.0
+  ],
+  [
+   "Busca renda rápida",
+   4,
+   0.0
+  ],
+  [
+   "Cético que quer prova",
+   4,
+   0.0
+  ]
+ ],
+ "by_income": [
+  [
+   "under $52,000",
+   6,
+   0.0
+  ],
+  [
+   "$98,000 and up",
+   7,
+   0.0
+  ],
+  [
+   "$52,000 to $98,000",
+   7,
+   0.0
+  ]
+ ],
+ "why_not": [
+  [
+   "trust",
+   20,
+   [
+    "Com banca pequena eu não vou pagar assinatura por sinal de 1 minuto sem saber se é seguro e legal. Já vi muito guru no TikTok prometendo isso, e backtest bonito não me convence.",
+    "Já vi muito guru e grupo de sinal com backtest bonito que não aguenta ao vivo. Backtest não é dinheiro na conta, e 54% em cima de 51% de equilíbrio é uma margem fina que some com atraso de entrada ou spread."
+   ],
+   [
+    "P001",
+    "P002"
+   ]
+  ]
+ ],
+ "why_yes": [],
+ "flip": [
+  "Um teste grátis de 7 a 14 dias com resultados ao vivo verificáveis, ou um cupom de lançamento bem baixo, sem compromisso de renovação.",
+  "Resultado ao vivo verificável por algumas semanas, com horário de cada sinal, ou um teste grátis/garantia de reembolso para eu medir sozinho.",
+  "Um histórico ao vivo auditado por terceiros, com horário dos sinais registrado antes do fechamento de cada vela, ao longo de pelo menos alguns meses, e teste grátis ou reembolso.",
+  "Resultado ao vivo verificável por alguns meses, com extrato de corretora real, e um teste grátis ou garantia de reembolso.",
+  "Alguns meses de resultado ao vivo auditado, com horário dos alertas e prints das entradas, ou um teste grátis de 30 dias para eu medir o acerto na minha corretora.",
+  "Resultado ao vivo verificável de alguns meses, com prints de corretora ou extrato, e um teste grátis de 7 a 14 dias pra eu ver se consigo entrar a tempo.",
+  "Resultado ao vivo, verificável e auditável por meses, com teste grátis ou garantia de reembolso, mostrando que o acerto se mantém com o atraso real de execução.",
+  "Um registro ao vivo verificável de alguns meses, com horário de cada sinal, ou um teste grátis em que eu confira na minha planilha de banca se o acerto fica acima de 51%.",
+  "Um histórico ao vivo auditável de pelo menos alguns meses, com prints de operações reais e extrato da corretora, ou um período de teste grátis para eu anotar na minha planilha.",
+  "Resultado ao vivo auditável de pelo menos 3 meses (com horário de cada sinal verificável), mais teste grátis ou garantia de reembolso.",
+  "Um teste grátis de 7 a 14 dias com resultado ao vivo comprovado, ou cupom de lançamento bem baixo.",
+  "Histórico ao vivo auditável de pelo menos 2 ou 3 meses, com prints de operações reais com horário, e um período de teste grátis pra eu comparar com a minha planilha.",
+  "Ver pelo menos 1 a 2 meses de resultado ao vivo, com horário e print de corretora verificável, ou um teste grátis de 7 a 14 dias onde eu mesmo confiro os sinais contra as velas.",
+  "Resultado ao vivo verificável por uns meses, com prints de corretora real, e um teste grátis ou garantia de reembolso.",
+  "Resultado ao vivo verificado por alguns meses, com extrato de corretora real, e um teste grátis ou garantia de devolução.",
+  "Pelo menos 2-3 meses de resultado ao vivo, auditável, com entradas registradas em tempo real (timestamp) e trial grátis para eu testar na minha conta demo.",
+  "Resultado ao vivo verificável de pelo menos 2 ou 3 meses, e um período de teste grátis ou garantia de reembolso.",
+  "Histórico ao vivo auditável de pelo menos 3 meses, com prints de extrato da corretora e entradas registradas em tempo real, e um teste grátis ou garantia de reembolso.",
+  "Meses de resultado ao vivo verificavel, com horario e preco de cada sinal, ou um periodo de teste gratis para eu rodar em conta demo e conferir o acerto antes de pagar.",
+  "Um teste gratis de 7 a 14 dias com resultado ao vivo verificavel (horario do sinal vs. horario da vela) ou desconto de lancamento bem forte, sem fidelidade."
+ ],
+ "purchases_first_month_per_buyer": null,
+ "price_answers": 20
+}

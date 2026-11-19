@@ -1,0 +1,13 @@
+{
+  "id": "P014",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Já perdi dinheiro com isso e já vi guru de TikTok prometendo mil coisas. Backtest bonito de 13 em 13 meses positivos me soa bom demais pra ser verdade, e eu não sei se é seguro operar isso.",
+  "objection": "É só backtest, não é resultado ao vivo. Com 7 segundos antes do fechamento, o atraso do Telegram e o payout real da corretora podem comer os 3% de margem e eu perco de novo.",
+  "would_change_my_mind": "Resultado ao vivo verificável por uns meses, com prints de corretora real, e um teste grátis ou garantia de reembolso.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 50,
+  "price_too_expensive": 120
+}

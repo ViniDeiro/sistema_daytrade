@@ -1,0 +1,2 @@
+reiniciado Thu Nov  5 22:03:30 -03 2026
+{"n":0,"w":0,"pnl":0,"abertas":0,"info":null,"linhas":[]}

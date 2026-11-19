@@ -1,0 +1,13 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Eles mesmos dizem que o acerto é 49,5% e o equilíbrio é 51,02%, ou seja, no papel já perde dinheiro. Com banca pequena eu não vou pagar assinatura por sinal que não deu lucro, e ainda fico com medo de não ser seguro.",
+  "objection": "O próprio resultado medido está abaixo do ponto de equilíbrio, então eu pagaria pra perder dinheiro mais devagar.",
+  "would_change_my_mind": "Um teste grátis de 30 dias e, depois de centenas de entradas, o filtro forte acima de 53% de acerto ao vivo.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 40,
+  "price_too_expensive": 80
+}

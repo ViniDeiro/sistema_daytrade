@@ -1,0 +1,13 @@
+{
+  "id": "P007",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Já perdi dinheiro com infoprodutos de trading e backtest simulado não me convence. +$126 mil em um ano com 54% de acerto soa bom demais pra ser verdade, e com banca pequena não vou arriscar $40 por entrada em cima de promessa.",
+  "objection": "É só backtest, não resultado ao vivo. Sinal 7 segundos antes do fechamento da vela, com delay do Telegram e da corretora, o acerto real deve cair abaixo do equilíbrio de 51%. E não sei se é legal ou seguro operar isso.",
+  "would_change_my_mind": "Resultado ao vivo, verificável e auditável por meses, com teste grátis ou garantia de reembolso, mostrando que o acerto se mantém com o atraso real de execução.",
+  "price_too_cheap": 9,
+  "price_cheap": 25,
+  "price_expensive": 70,
+  "price_too_expensive": 130
+}

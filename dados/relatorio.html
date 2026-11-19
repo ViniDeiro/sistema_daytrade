@@ -1,0 +1,124 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Projeto IDX/USDT - Relatório completo</title>
+<style>
+@page{size:A4;margin:18mm 16mm}
+*{box-sizing:border-box}body{font:11pt/1.45 -apple-system,Helvetica,Arial,sans-serif;color:#1c2430}
+h1{font-size:25pt;margin:0 0 4px}h2{font-size:15pt;margin:22px 0 8px;padding-bottom:4px;border-bottom:2px solid #2d6cdf;color:#16325c;break-after:avoid}
+h3{font-size:12pt;margin:14px 0 4px;color:#16325c;break-after:avoid}p{margin:6px 0}ul{margin:6px 0 6px 18px;padding:0}li{margin:3px 0}
+.sub{color:#5b6777;font-size:10pt}.cover{padding:30mm 0 10mm}
+.box{border:1px solid #cfd8e6;background:#f4f7fc;border-radius:8px;padding:10px 12px;margin:10px 0;break-inside:avoid}
+.warn{border-color:#e0b34a;background:#fff8e6}.bad{border-color:#e08a8a;background:#fff0f0}.ok{border-color:#8ac29a;background:#eefaf1}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:9.8pt;break-inside:avoid}th,td{border:1px solid #d6dde8;padding:4px 6px;text-align:left}
+th{background:#e9eef7;color:#16325c}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.neg{color:#b3261e}.pos{color:#1b7f3b}.pb{break-before:page}code{background:#eef1f5;padding:1px 4px;border-radius:3px;font-size:9.5pt}
+.foot{margin-top:24px;color:#5b6777;font-size:9pt;border-top:1px solid #d6dde8;padding-top:6px}
+</style></head><body>
+
+<div class="cover">
+<div class="sub">Relatório do projeto · atualizado em 22/10/2026</div>
+<h1>Estratégia de continuação no IDX/USDT (Ebinex, M1)</h1>
+<p class="sub">Tudo o que construímos, testamos e decidimos até agora: a ideia, os dados, o painel, as regras de gestão, os resultados reais e o plano de negócio.</p>
+<div class="box warn"><b>Resumo em uma frase.</b> No backtest de 2 anos, a continuação depois de 4 velas iguais mostrou uma vantagem pequena (cerca de 53% contra 51,02% de equilíbrio). No teste ao vivo (paper, sem dinheiro no sistema) desde 09/10, ela está <b>abaixo do equilíbrio</b>: 49,0% em 1.052 entradas novas. A validação final foi marcada para <b>30/11/2026</b>.</div>
+</div>
+
+<h2>1. A ideia e as regras do jogo</h2>
+<ul>
+<li><b>Ativo e prazo:</b> IDX/USDT na Ebinex, velas de 1 minuto. A aposta é na cor da <i>próxima</i> vela (compra = verde, venda = vermelha).</li>
+<li><b>Payout:</b> 96%. Win = +0,96 × entrada; loss = −entrada; empate (doji) é devolvido. O <b>equilíbrio</b> é acertar <b>51,02%</b>.</li>
+<li><b>Regra 1 (continuação):</b> depois de 4 ou mais velas fechadas da mesma cor, apostar que a próxima vela repete a cor. O sinal sai cerca de 7 segundos antes do fim da 4ª vela; a entrada vale na abertura da vela seguinte. As sequências mais longas (5ª, 6ª...) geram novos sinais.</li>
+<li><b>Papel do sistema:</b> só <b>lê</b> o gráfico e registra operações de papel (forward test). Ele <b>não envia ordens</b>. Quem opera é você, à mão, na Ebinex.</li>
+</ul>
+
+<h2>2. Dados e backtests</h2>
+<p>Base: ~1,05 milhão de velas M1 do IDX (09/10/2024 a 09/10/2026), coletadas da Ebinex. Descoberta no ano 1 e validação no ano 2, com correção de Bonferroni e teste de significância.</p>
+<h3>Acerto da continuação por tamanho da sequência</h3>
+<table><tr><th>Velas iguais seguidas</th><th class="n">Acerto na vela seguinte</th><th class="n">ROI por entrada</th></tr>
+<tr><td>4</td><td class="n">52,7%</td><td class="n">+3,4%</td></tr><tr><td>5</td><td class="n">53,1%</td><td class="n">+4,0%</td></tr><tr><td>6</td><td class="n">53,3%</td><td class="n">+4,5%</td></tr><tr><td>7</td><td class="n">54,5%</td><td class="n">+6,7%</td></tr><tr><td>8 ou mais</td><td class="n">56,5%</td><td class="n">+10,7%</td></tr></table>
+<p><b>Resultado do backtest completo</b> (08h–22h, todas as entradas, $40 fixo): acerto 54,1%, cerca de 117 entradas por dia, lucro médio de ~$8.700 por mês, 1 mês negativo em 25, pior dia −$1.056, maior queda acumulada $2.570, 227 de 731 dias negativos.</p>
+<div class="box"><b>O que isso significa:</b> a vantagem existe no passado, mas é pequena (2 a 3 pontos acima do equilíbrio). Qualquer perda de 1 a 2 pontos ao vivo elimina o lucro.</div>
+
+<h2>3. Resultados ao vivo (forward test em papel)</h2>
+<p>Registro automático de cada sinal, desde 09/10/2026, com entrada de $40. A contagem das <b>entradas novas</b> (a que vale para validação) começa em 12/10 às 10h38.</p>
+<table><tr><th></th><th class="n">Entradas</th><th class="n">Wins</th><th class="n">Acerto</th><th class="n">Resultado a $40</th></tr>
+<tr><td>Entradas novas (régua principal)</td><td class="n">1.052</td><td class="n">516</td><td class="n">49,0%</td><td class="n neg">−$1.625,60</td></tr>
+<tr><td>Acumulado desde 09/10</td><td class="n">1.353</td><td class="n">649</td><td class="n">48,0%</td><td class="n neg">≈ −$3.240</td></tr></table>
+<h3>Por dia</h3>
+<table><tr><th>Dia</th><th class="n">Entradas</th><th class="n">Acerto</th><th class="n">Resultado</th></tr>
+<tr><td>09/10</td><td class="n">85</td><td class="n">38,8%</td><td class="n neg">−$812,80</td></tr><tr><td>10/10</td><td class="n">104</td><td class="n">51,9%</td><td class="n pos">+$73,60</td></tr><tr><td>11/10</td><td class="n">94</td><td class="n">40,4%</td><td class="n neg">−$780,80</td></tr><tr><td>12/10</td><td class="n">112</td><td class="n">52,7%</td><td class="n pos">+$145,60</td></tr><tr><td>13/10</td><td class="n">109</td><td class="n">48,6%</td><td class="n neg">−$204,80</td></tr><tr><td>14/10</td><td class="n">102</td><td class="n">47,1%</td><td class="n neg">−$316,80</td></tr><tr><td>15/10</td><td class="n">95</td><td class="n">48,4%</td><td class="n neg">−$193,60</td></tr><tr><td>16/10</td><td class="n">97</td><td class="n">49,5%</td><td class="n neg">−$116,80</td></tr><tr><td>17/10</td><td class="n">101</td><td class="n">42,6%</td><td class="n neg">−$668,80</td></tr><tr><td>18/10</td><td class="n">97</td><td class="n">51,5%</td><td class="n pos">+$40,00</td></tr><tr><td>19/10</td><td class="n">101</td><td class="n">48,5%</td><td class="n neg">−$198,40</td></tr><tr><td>20/10</td><td class="n">114</td><td class="n">50,9%</td><td class="n neg">−$12,80</td></tr><tr><td>21/10</td><td class="n">108</td><td class="n">52,8%</td><td class="n pos">+$148,80</td></tr><tr><td>22/10 (parcial)</td><td class="n">34</td><td class="n">38,2%</td><td class="n neg">−$340,80</td></tr></table>
+<div class="box bad"><b>Leitura honesta:</b> o ao vivo está bem abaixo do que o backtest sugeria (49,0% contra ~53,8% esperado). Isso é incomum, mas ainda dentro do que a sorte permite quando se considera que as entradas vêm em sequências. Não prova que a vantagem não existe, e também não a confirma. Quem decide é o tamanho da amostra até 30/11.</div>
+
+<h2 class="pb">4. O que já testamos (e o que descobrimos)</h2>
+<table><tr><th>Ideia</th><th>Resultado</th></tr>
+<tr><td>Reversão (apostar contra a sequência)</td><td>Perde no backtest: ~47% depois de 4 velas e ~43% depois de 8+. Só se sai bem no ao vivo recente, porque a continuação foi mal.</td></tr>
+<tr><td>Martingale / gale</td><td>Não muda o valor esperado e explode a queda máxima.</td></tr>
+<tr><td>Stop loss diário</td><td>Corta o pior dia, mas reduz o lucro; stop win reduz mais o lucro.</td></tr>
+<tr><td>Sequência + vela forte (corpo grande)</td><td>~56% no ano 2, ~15 sinais por dia. Refinamento da mesma estratégia.</td></tr>
+<tr><td>Busca ampla (6.832 regras: pavios, médias, volatilidade, hora, etc.)</td><td>Nada novo além da própria continuação.</td></tr>
+<tr><td>Price action: suporte/resistência, Fibonacci</td><td>"Respeita o nível" não funciona (≤50%). Rompimento de resistência após 4+ toques: 53,4% (ATR causal; um erro de look-ahead inicial inflava o número para 56%). Fibonacci: sem vantagem.</td></tr>
+<tr><td>Gráfico M5 e MEMX/USDT</td><td>M5: sem vantagem clara. MEMX: 50,95% em 13.205 entradas, igual ao equilíbrio.</td></tr>
+<tr><td>Reentrada, indicadores (Bollinger, RSI...)</td><td>Melhoram um pouco em regimes de volatilidade, mas não foram adotados.</td></tr></table>
+
+<h3>Análise por horário (backtest dos 2 anos)</h3>
+<table><tr><th>Janela</th><th class="n">Entradas/dia</th><th class="n">Acerto</th><th class="n">Lucro/mês a $40</th><th class="n">Pior dia</th><th class="n">Meses negativos</th></tr>
+<tr><td>08h–22h (atual)</td><td class="n">117</td><td class="n">54,1%</td><td class="n">$8.706</td><td class="n">−$1.056</td><td class="n">1 de 25</td></tr>
+<tr><td>10h–15h</td><td class="n">44</td><td class="n">55,5%</td><td class="n">$4.593</td><td class="n">−$570</td><td class="n">1 de 25</td></tr>
+<tr><td><b>10h–15h + 18h–22h</b></td><td class="n">77</td><td class="n">55,0%</td><td class="n">$7.302</td><td class="n">−$835</td><td class="n"><b>0 de 25</b></td></tr></table>
+<p>Os melhores horários foram 10h e 11h (56,3% nos dois anos), 12h–14h (~55%), 18h e 20h. Os piores foram de 03h a 08h (~50–52%). Ao vivo, essa leitura <b>ainda não se confirma</b> (12h–13h foram ruins).</p>
+
+<h2>5. Gestão de banca</h2>
+<ul>
+<li><b>Entrada pequena:</b> $20 a $30 (a regra de Kelly com 53% de acerto dá cerca de 2% da banca por entrada; com 51% dá zero).</li>
+<li><b>Soros (40 / 78,40):</b> se ganhar a 1ª entrada, a 2ª vai a $78,40; depois volta a $40. No backtest aumenta o lucro em ~40% e a queda máxima em ~64%. No ao vivo, perdeu menos que o fixo (−$2.272 contra −$3.238), mas continua negativo.</li>
+<li><b>Stop win (+$500) e stop loss (−$400):</b> o stop win ajudou no período ao vivo e custa quase metade do lucro se a vantagem existir; o stop loss de $400 deixa margem para a estratégia oscilar (backtest: 74% do lucro com pior dia de −$438).</li>
+<li><b>Gatilhos de banca (plano combinado):</b> abaixo de $1.800 → entrada de $30; abaixo de $1.200 → $20; abaixo de $600 → parar até o veredito.</li>
+<li><b>Meta de $8.000 em dezembro:</b> a simulação mostra ~47 dias se o acerto real for 53,3%, e 4% de chance se for 51%. Com 49–50% (ao vivo), a banca tende a diminuir.</li>
+</ul>
+
+<h2 class="pb">6. O sistema que construímos</h2>
+<p>Tudo roda localmente no seu Mac, com um painel em <code>http://localhost:3000</code> e alertas no Telegram.</p>
+<ul>
+<li><b>Leitura do gráfico</b> (<code>live.mjs</code>): navegador Playwright (sem janela) com a sessão logada, lendo o WebSocket de candles e o histórico por REST. Recupera minutos que o feed pula e, após quedas, reconstrói os sinais perdidos.</li>
+<li><b>Painel</b> (<code>index.html</code>), com 3 abas: <b>Estratégia atual</b> (ao vivo, régua de validação, resultado por dia, bancas de papel), <b>Contra (1ª entrada)</b> (aposta contra a sequência, $20 fixo) e <b>Janela 10–15 e 18–22</b> (entradas só nesses horários, $20 fixo, com régua própria).</li>
+<li><b>Bancas de papel:</b> Fixo $40, Soros, Soros + stop win, Soros + stop win + stop loss, Fixo + stop win, e Fixo só nas janelas.</li>
+<li><b>Telegram</b> (<code>notify.mjs</code>, <code>mensagens.mjs</code>): alerta de sinal (COMPRAR/VENDER), aviso de "Atenção" (3 velas), relatório a cada hora cheia, marcos de entradas novas (100 a 5.000), gatilhos de banca, aviso de perda de conexão e veredito final em 30/11. Sinais e atenção só dentro das janelas 10h–15h e 18h–22h.</li>
+<li><b>Arquivos importantes:</b> <code>dados/forward_log.json</code> (registro das operações), <code>dados/CRITERIOS.md</code> (regras), <code>Levantamentos_Estrategia_IDX.xlsx</code> (planilha com backtests e forward test), scripts de análise em <code>dados/</code>.</li>
+</ul>
+<h3>Problemas que apareceram e como foram resolvidos</h3>
+<ul>
+<li>Janela do navegador interrompia a sua tela nos reinícios → agora roda sem janela.</li>
+<li>Sinais perdidos quando o feed pulava um minuto inteiro (ex.: 19/10 às 19h) → o sistema agora busca a vela por outro caminho a partir dos 45 s.</li>
+<li>Quedas de conexão (10:50 a 17:44 em 18/10; blips curtos em 20/10) → sinais reconstruídos a partir dos candles e marcados como "recuperados" no registro.</li>
+<li>Aviso de "Atenção" saía em modo silencioso no Telegram → corrigido, vibra como o de sinal.</li>
+<li>Erro meu: um backtest do rompimento usava um ATR com olhar para o futuro → refeito de forma causal (resultado caiu de 56% para 53%).</li>
+</ul>
+
+<h2>7. Critério de validação e prazos</h2>
+<div class="box ok"><b>Regra combinada (prazo atualizado em 21/10):</b> contar as <b>entradas novas</b> desde 12/10 10h38. O veredito final é em <b>30/11/2026</b>, com todas as entradas até lá.
+<ul><li><b>53% ou mais:</b> validada, a vantagem se confirma ao vivo.</li><li><b>51% a 53%:</b> vantagem fraca / inconclusiva; seguir sem aumentar a entrada.</li><li><b>Abaixo de 51%:</b> reprovada; sem vantagem sobre o equilíbrio.</li></ul>
+As 2.000 entradas viraram um checkpoint; marcos de 3.000, 4.000 e 5.000 também são acompanhados. Para chegar a 53% em 2.000 entradas, a média das restantes precisaria ser de ~55%; por isso, o resultado do ao vivo até aqui já torna esse cenário difícil.</div>
+<p><b>Voltar a operar com dinheiro:</b> só depois de, pelo menos, 500 novas com acerto &gt;= 52% e sem alarme, e começando com entrada pequena.</p>
+
+<h2 class="pb">8. A ideia de negócio (depois de validar)</h2>
+<ul>
+<li><b>Produto:</b> grupo/canal VIP no Telegram com sinais, possivelmente separado por faixas de horário comprovadas no backtest; app de gestão de banca; mini curso de educação financeira.</li>
+<li><b>Princípios:</b> nenhuma promessa de lucro, resultado real e público (incluindo os dias ruins), foco em disciplina e em não quebrar. O objetivo é ser o contrário de quem vende "90% de assertividade".</li>
+<li><b>Meta de escala:</b> 5 a 10 mil assinantes, vendidos por Hotmart/Kiwify ou landing page própria.</li>
+<li><b>Decisões já tomadas:</b> tirar a conta e o CPF da sua esposa do projeto; procurar uma API oficial da Ebinex e pedir autorização por escrito para o uso comercial dos dados; esperar o veredito de 30/11 antes de lançar.</li>
+</ul>
+<div class="box warn"><b>Pontos a resolver antes de lançar:</b>
+<ul><li><b>Regulação:</b> recomendar operações em ativos/opções binárias pode exigir registro na CVM ou cair em restrições. Conversar com advogado do mercado financeiro.</li>
+<li><b>Plataformas:</b> Hotmart/Kiwify e as regras de anúncios do Meta e do TikTok costumam restringir esse tipo de produto; ler os termos antes de montar o funil.</li>
+<li><b>Dados da Ebinex:</b> o painel lê o gráfico pela sessão logada de uma conta. Uso comercial em escala provavelmente viola os termos; usar API oficial e autorização escrita.</li>
+<li><b>Estrutura:</b> CNPJ próprio e contador; contas, pagamentos e responsabilidade no nome da empresa, e não de pessoa física de terceiros.</li>
+<li><b>Promessas:</b> evitar valores de ganho (ex.: "renda extra de R$500 a R$1.000"), porque equivalem a prometer resultado.</li></ul></div>
+
+<h2>9. Próximos passos</h2>
+<ol>
+<li>Deixar o painel rodando até <b>30/11/2026</b> e acompanhar a régua, as bancas, a aba Contra e a aba Janela.</li>
+<li>Comparar, com mais dados, as variantes: só a 1ª entrada, Soros, stops e janelas de horário.</li>
+<li>Acompanhar no papel o rompimento de resistência (4+ toques), sem alertas.</li>
+<li>Criar o canal privado do Telegram e ligar o envio dos avisos a ele.</li>
+<li>Depois do veredito: montar a página pública de transparência, o e-mail para a Ebinex (API e uso comercial) e conversar com advogado e contador.</li>
+</ol>
+
+<div class="foot">Este relatório descreve backtests e resultados de papel; não é recomendação de investimento nem promessa de resultado. Resultados passados não garantem resultados futuros. Os valores do forward test são de entradas simuladas em $40, salvo indicação.</div>
+</body></html>

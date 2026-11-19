@@ -1,0 +1,13 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Com banca pequena eu não vou pagar assinatura por sinal de 1 minuto sem saber se é seguro e legal. Já vi muito guru no TikTok prometendo isso, e backtest bonito não me convence.",
+  "objection": "Não sei se é legal ou seguro operar isso, e 13 de 13 meses positivos num backtest parece bom demais para ser verdade. Resultado simulado não é dinheiro real, e com 7 segundos para entrar eu posso perder a entrada.",
+  "would_change_my_mind": "Um teste grátis de 7 a 14 dias com resultados ao vivo verificáveis, ou um cupom de lançamento bem baixo, sem compromisso de renovação.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 40,
+  "price_too_expensive": 80
+}

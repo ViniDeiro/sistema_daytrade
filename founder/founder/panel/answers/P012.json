@@ -1,0 +1,13 @@
+{
+  "id": "P012",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Eles mesmos mostram 49,5% de acerto em 1.853 entradas, abaixo do ponto de equilíbrio de 51,02%. Ou seja, o histórico auditável que eu pediria prova que a regra perde dinheiro, e eu não pago por sinal que perde.",
+  "objection": "O resultado ao vivo está abaixo do breakeven. O filtro forte tem só 16 entradas, o que não prova nada. Pagar por isso é pagar para perder com a banca pequena que eu tenho.",
+  "would_change_my_mind": "Ver o filtro de sinais fortes acima de 51,02% numa amostra grande (centenas de entradas) no registro público, por algumas semanas seguidas, ou então um período de teste grátis.",
+  "price_too_cheap": 9,
+  "price_cheap": 19,
+  "price_expensive": 49,
+  "price_too_expensive": 89
+}

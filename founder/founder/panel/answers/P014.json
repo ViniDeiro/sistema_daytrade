@@ -1,0 +1,13 @@
+{
+  "id": "P014",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "Eu já perdi dinheiro e queria lucro rápido, e aqui eles mesmos mostram 49,5% de acerto, abaixo do ponto de equilíbrio. Pagar assinatura por sinal que na prática perde não faz sentido, e o filtro bom tem só 16 entradas.",
+  "objection": "O próprio resultado ao vivo está abaixo do equilíbrio (49,5% contra 51,02%), então seguir isso é perder devagar. E ainda não sei se é legal ou seguro operar isso.",
+  "would_change_my_mind": "Ver o filtro forte com centenas de entradas ao vivo acima de 52% por algumas semanas, no registro público.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 50,
+  "price_too_expensive": 120
+}

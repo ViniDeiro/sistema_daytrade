@@ -1,0 +1,13 @@
+{
+  "id": "P004",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "Eles mesmos dizem que o acerto medido é 49,5% e o equilíbrio é 51,02%, então na prática perde dinheiro. Eu troco de grupo quando para de dar resultado, e este já começa sem resultado.",
+  "objection": "O número real está abaixo do ponto de equilíbrio. Pagar por sinal que perde e ainda ter que operar no risco, sem saber se é legal ou seguro.",
+  "would_change_my_mind": "Ver meses de registro público com acerto acima de 51% em volume grande (não 16 entradas), e o filtro forte confirmado ao vivo.",
+  "price_too_cheap": 10,
+  "price_cheap": 30,
+  "price_expensive": 90,
+  "price_too_expensive": 200
+}

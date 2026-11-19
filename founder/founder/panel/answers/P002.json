@@ -1,0 +1,13 @@
+{
+  "id": "P002",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "O próprio número de vocês diz 49,5% com equilíbrio em 51,02%, então seguir esses sinais perde dinheiro. Eu troco de grupo quando para de dar resultado, e esse já nasce sem resultado.",
+  "objection": "49,5% de acerto em 1.853 entradas é abaixo do equilíbrio, então perco dinheiro. O filtro forte tem só 16 entradas, isso não prova nada.",
+  "would_change_my_mind": "Mais de 51,02% ao vivo, de forma sustentada, em algumas centenas de entradas do filtro forte no registro público, sem eu precisar confiar na palavra de vocês.",
+  "price_too_cheap": 9,
+  "price_cheap": 25,
+  "price_expensive": 80,
+  "price_too_expensive": 150
+}

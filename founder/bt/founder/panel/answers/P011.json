@@ -1,0 +1,13 @@
+{
+  "id": "P011",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Backtest bonito demais, 13 de 13 meses positivos soa como golpe de grupo de Telegram. Minha banca é pequena e eu só pagaria se tivesse teste grátis pra ver ao vivo.",
+  "objection": "Não sei se é legal ou seguro operar isso, e backtest não é resultado real. Se funcionasse assim, por que vender o sinal em vez de só operar?",
+  "would_change_my_mind": "Um teste grátis de 7 a 14 dias com resultado ao vivo comprovado, ou cupom de lançamento bem baixo.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 40,
+  "price_too_expensive": 80
+}

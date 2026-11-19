@@ -1,0 +1,13 @@
+{
+  "id": "P019",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Backtest nao e dinheiro real, e eu ja perdi grana acreditando em numero bonito. 13 de 13 meses positivos com 54% de acerto em 1 minuto parece bom demais, e com alerta 7 segundos antes do fechamento eu nao sei se a entrada real pega o mesmo preco e payout do teste.",
+  "objection": "Nao ha resultado ao vivo nenhum. Atraso do Telegram, slippage e payout que cai na corretora podem comer facilmente a margem de 3 pontos sobre o equilibrio de 51,02%.",
+  "would_change_my_mind": "Meses de resultado ao vivo verificavel, com horario e preco de cada sinal, ou um periodo de teste gratis para eu rodar em conta demo e conferir o acerto antes de pagar.",
+  "price_too_cheap": 15,
+  "price_cheap": 35,
+  "price_expensive": 90,
+  "price_too_expensive": 180
+}

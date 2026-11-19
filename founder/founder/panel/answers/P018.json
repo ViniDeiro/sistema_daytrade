@@ -1,0 +1,13 @@
+{
+  "id": "P018",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Os números deles mesmos dizem que o sinal perde: 49,5% de acerto em 1.853 entradas, abaixo dos 51,02% de equilíbrio. Eu já perdi banca com sinal, não vou pagar para seguir algo que no papel perde dinheiro.",
+  "objection": "Posso perder minha banca seguindo o sinal. O resultado medido está abaixo do ponto de equilíbrio e o filtro forte tem só 16 entradas, que não prova nada.",
+  "would_change_my_mind": "Centenas de entradas do filtro forte, ao vivo e auditável, acima de 51,02% de acerto de forma consistente, com o registro público confirmando.",
+  "price_too_cheap": 15,
+  "price_cheap": 40,
+  "price_expensive": 120,
+  "price_too_expensive": 250
+}
